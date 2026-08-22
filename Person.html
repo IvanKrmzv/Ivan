@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Dərviş — Nihad</title>
+<meta name="description" content="Nihad&#39;ın &laquo;Dərviş&raquo; fəlsəfi alleqoriyası — səhifə-səhifə oxu rejimi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink-950:#10131a;
+    --ink-900:#161a22;
+    --ink-800:#1c212b;
+    --paper-100:#ede7d8;
+    --paper-50:#f6f2e7;
+    --paper-warm:#efe8d6;
+    --text-onink:#e9e5d8;
+    --text-onink-dim:#a7a397;
+    --text-onpaper:#241f18;
+    --text-onpaper-dim:#5b574c;
+    --verdigris:#5f8770;
+    --verdigris-bright:#7fae94;
+    --brass:#b98d4a;
+    --brass-bright:#d3ab6c;
+    --line:rgba(233,229,216,0.12);
+    --line-paper:rgba(32,30,25,0.14);
+    --serif:'Noto Serif', Georgia, serif;
+    --sans:'Noto Sans', -apple-system, sans-serif;
+    --reader-size:1.06rem;
+    --reader-lh:1.85;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    color:var(--text-onink);
+    font-family:var(--sans);
+    background:
+      radial-gradient(ellipse at 20% -10%, rgba(95,135,112,0.10), transparent 60%),
+      linear-gradient(180deg, #171310 0%, #14110e 40%, #100d0b 100%);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  button{font-family:inherit;}
+  .visually-hidden{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+  button:focus-visible, a:focus-visible{
+    outline:2px solid var(--brass-bright); outline-offset:2px;
+  }
+
+  /* ================= COVER ================= */
+  #cover{
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    padding:2rem 1.25rem;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  #cover::before{
+    content:"";
+    position:absolute; inset:0; pointer-events:none; opacity:0.05; z-index:0;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='120' viewBox='0 0 240 120'><g fill='none' stroke='%23e9e5d8' stroke-width='1'><rect x='6' y='10' width='10' height='80'/><rect x='30' y='8' width='12' height='82'/><rect x='59' y='6' width='11' height='84'/><rect x='86' y='10' width='13' height='80'/><rect x='116' y='8' width='10' height='82'/><rect x='145' y='10' width='9' height='80'/><rect x='174' y='14' width='8' height='76'/><rect x='200' y='16' width='11' height='74'/><line x1='0' y1='96' x2='240' y2='96'/></g></svg>");
+    background-repeat:repeat; background-size:240px 120px;
+  }
+  .cover-inner{position:relative; z-index:1; max-width:36rem;}
+  .cover-seal{width:96px; height:96px; margin:0 auto 1.75rem;}
+  .cover-eyebrow{
+    font-family:var(--sans); font-size:0.78rem; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--verdigris-bright); margin:0 0 1.25rem;
+  }
+  .cover-title{
+    font-family:var(--serif); font-weight:700; letter-spacing:0.02em;
+    font-size:clamp(2.6rem,10vw,4.6rem); margin:0; color:var(--text-onink);
+  }
+  .cover-byline{
+    font-family:var(--sans); font-size:0.9rem; color:var(--text-onink-dim);
+    margin:0.85rem 0 0; letter-spacing:0.03em;
+  }
+  .cover-epigraph{
+    font-family:var(--serif); font-style:italic; font-weight:400;
+    font-size:clamp(1rem,2.4vw,1.2rem); line-height:1.75;
+    color:var(--text-onink-dim); max-width:32em; margin:2.25rem auto 0;
+  }
+  .cover-meta{
+    display:flex; gap:0.6rem; justify-content:center; flex-wrap:wrap;
+    margin:1.5rem 0 0; font-family:var(--sans); font-size:0.72rem;
+    letter-spacing:0.06em; text-transform:uppercase; color:var(--text-onink-dim);
+  }
+  .cover-meta span{
+    border:1px solid var(--line); border-radius:999px; padding:0.3rem 0.8rem;
+  }
+  .cover-start{
+    display:inline-flex; align-items:center; gap:0.6rem;
+    margin-top:2.5rem;
+    font-family:var(--sans); font-weight:600; font-size:1rem;
+    color:#241a08; background:var(--brass); border:1px solid var(--brass);
+    padding:0.9rem 1.9rem; border-radius:999px; cursor:pointer;
+    transition:background 0.2s ease, transform 0.2s ease;
+  }
+  .cover-start:hover{background:var(--brass-bright); transform:translateY(-1px);}
+  .cover-start:active{transform:translateY(0);}
+  .cover-hint{
+    display:block; margin-top:1rem; font-size:0.78rem; color:var(--text-onink-dim);
+  }
+
+  /* ================= READER SHELL ================= */
+  #reader{
+    min-height:100vh;
+    display:flex; flex-direction:column;
+  }
+  .reader-bar{
+    position:sticky; top:0; z-index:15;
+    display:flex; align-items:center; gap:0.75rem;
+    padding:0.85rem clamp(0.9rem,3vw,1.75rem);
+    background:rgba(20,17,14,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .bar-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:2.35rem; height:2.35rem; flex:none;
+    border-radius:8px; border:1px solid var(--line);
+    background:transparent; color:var(--text-onink-dim);
+    cursor:pointer; transition:border-color 0.2s ease, color 0.2s ease;
+  }
+  .bar-btn:hover{color:var(--brass-bright); border-color:var(--brass);}
+  .bar-btn svg{width:18px; height:18px;}
+  .bar-crumb{
+    flex:1; min-width:0; text-align:center;
+    font-family:var(--serif); font-style:italic; font-size:0.95rem;
+    color:var(--text-onink-dim);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .bar-crumb b{color:var(--text-onink); font-style:normal; font-weight:600;}
+  .font-controls{display:flex; gap:0.35rem; flex:none;}
+
+  /* ================= BOOK STAGE ================= */
+  .book-stage{
+    flex:1;
+    display:flex; align-items:stretch; justify-content:center;
+    gap:0.25rem;
+    padding:clamp(0.75rem,3vw,2rem) clamp(0.4rem,2vw,1.5rem);
+    position:relative;
+  }
+  .nav-zone{
+    flex:none; width:2.75rem; align-self:center;
+    display:flex; align-items:center; justify-content:center;
+    background:transparent; border:none; color:var(--text-onink-dim);
+    cursor:pointer; border-radius:999px; height:2.75rem;
+    transition:color 0.2s ease, background 0.2s ease;
+  }
+  .nav-zone:hover:not(:disabled){color:var(--brass-bright); background:rgba(233,229,216,0.05);}
+  .nav-zone:disabled{opacity:0.25; cursor:default;}
+  .nav-zone svg{width:22px; height:22px;}
+
+  .page-wrap{
+    flex:1; max-width:640px;
+    perspective:1800px;
+    display:flex;
+  }
+  .leaf{
+    flex:1;
+    background:linear-gradient(155deg, var(--paper-warm) 0%, var(--paper-100) 100%);
+    color:var(--text-onpaper);
+    border-radius:6px;
+    box-shadow:0 1.5rem 3rem rgba(0,0,0,0.45), 0 0.25rem 0.6rem rgba(0,0,0,0.3);
+    padding:clamp(1.5rem,5vw,3.25rem) clamp(1.35rem,5vw,3.5rem);
+    display:flex; flex-direction:column;
+    min-height:min(72vh, 640px);
+    max-height:80vh;
+    overflow-y:auto;
+    transform-style:preserve-3d;
+    transition:transform 0.42s cubic-bezier(.4,.1,.2,1), opacity 0.3s ease;
+  }
+  .leaf.turn-next{transform:rotateY(-8deg) scale(0.985); opacity:0.55;}
+  .leaf.turn-prev{transform:rotateY(8deg) scale(0.985); opacity:0.55;}
+
+  .page-heading{
+    margin:0 0 1.4rem;
+    text-align:center;
+  }
+  .page-heading .eyebrow{
+    font-family:var(--sans); font-size:0.74rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:#3f6b52; margin:0 0 0.5rem;
+  }
+  .page-heading h2{
+    font-family:var(--serif); font-weight:700; margin:0;
+    font-size:clamp(1.35rem,4vw,1.9rem); color:var(--text-onpaper);
+  }
+  .page-heading .rule{
+    width:46px; height:2px; background:var(--brass); border:none;
+    margin:1.1rem auto 0; border-radius:2px;
+  }
+  .season-title-page{
+    flex:1; display:flex; align-items:center; justify-content:center;
+    text-align:center; flex-direction:column;
+  }
+  .season-title-page .eyebrow{
+    font-family:var(--sans); font-size:0.78rem; letter-spacing:0.2em; text-transform:uppercase;
+    color:#3f6b52; margin:0 0 1rem;
+  }
+  .season-title-page h1{
+    font-family:var(--serif); font-weight:700; font-size:clamp(1.7rem,6vw,2.6rem);
+    margin:0; color:var(--text-onpaper);
+  }
+  .season-title-page .rule{
+    width:64px; height:2px; background:var(--brass); border:none; border-radius:2px;
+    margin:1.4rem 0;
+  }
+
+  .page-body{
+    font-family:var(--serif);
+    font-size:var(--reader-size);
+    line-height:var(--reader-lh);
+  }
+  .page-body p{margin:0 0 1.05em;}
+  .page-body p:last-child{margin-bottom:0;}
+  .page-body p.thought{
+    font-style:italic; color:var(--text-onpaper-dim);
+  }
+  .page-body p.divider{
+    text-align:center; font-family:var(--sans); font-style:normal;
+    font-size:0.72rem; letter-spacing:0.16em; text-transform:uppercase;
+    color:#7a6a45; margin:1.4em 0; position:relative;
+  }
+  .page-body p.divider::before, .page-body p.divider::after{
+    content:""; display:inline-block; width:28px; height:1px;
+    background:var(--line-paper); vertical-align:middle; margin:0 0.7em;
+  }
+
+  /* ================= FOOTER ================= */
+  .reader-footer{
+    padding:0.75rem clamp(0.9rem,3vw,1.75rem) calc(0.9rem + env(safe-area-inset-bottom));
+    border-top:1px solid var(--line);
+    background:rgba(20,17,14,0.92);
+  }
+  .progress-track{
+    height:3px; border-radius:3px; background:var(--line); overflow:hidden; margin-bottom:0.65rem;
+  }
+  .progress-fill{
+    height:100%; background:linear-gradient(90deg, var(--verdigris), var(--brass));
+    width:0%; transition:width 0.3s ease;
+  }
+  .footer-row{
+    display:flex; align-items:center; justify-content:space-between; gap:0.75rem;
+    font-family:var(--sans); font-size:0.8rem; color:var(--text-onink-dim);
+  }
+  .footer-nav{display:flex; gap:0.5rem;}
+  .footer-nav button{
+    display:inline-flex; align-items:center; gap:0.4rem;
+    background:transparent; border:1px solid var(--line); color:var(--text-onink-dim);
+    padding:0.5rem 0.9rem; border-radius:999px; cursor:pointer; min-height:40px;
+    transition:border-color 0.2s ease, color 0.2s ease;
+  }
+  .footer-nav button:hover:not(:disabled){border-color:var(--brass); color:var(--brass-bright);}
+  .footer-nav button:disabled{opacity:0.3; cursor:default;}
+  .footer-nav svg{width:16px; height:16px;}
+  .page-counter{white-space:nowrap; font-variant-numeric:tabular-nums;}
+
+  /* ================= TOC PANEL ================= */
+  #tocScrim{
+    position:fixed; inset:0; background:rgba(10,8,6,0.55); z-index:24;
+    opacity:0; pointer-events:none; transition:opacity 0.25s ease;
+  }
+  #tocScrim.open{opacity:1; pointer-events:auto;}
+  #tocPanel{
+    position:fixed; top:0; bottom:0; left:0; width:min(86vw, 340px);
+    background:var(--ink-900); border-right:1px solid var(--line);
+    z-index:25; transform:translateX(-105%);
+    transition:transform 0.3s ease;
+    display:flex; flex-direction:column;
+    padding:1.25rem 0;
+  }
+  #tocPanel.open{transform:translateX(0);}
+  .toc-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 1.25rem 1rem; border-bottom:1px solid var(--line);
+  }
+  .toc-head h3{
+    font-family:var(--serif); font-weight:700; font-size:1.1rem; margin:0; color:var(--text-onink);
+  }
+  .toc-list{list-style:none; margin:0; padding:0.5rem 0; overflow-y:auto;}
+  .toc-list li a{
+    display:block; text-decoration:none; padding:0.65rem 1.25rem;
+    font-family:var(--sans); font-size:0.88rem; color:var(--text-onink-dim);
+    border-left:2px solid transparent;
+  }
+  .toc-list li a:hover{color:var(--brass-bright); background:rgba(233,229,216,0.04);}
+  .toc-list li a.active{color:var(--text-onink); border-left-color:var(--brass);}
+  .toc-list li a.season{
+    font-family:var(--serif); font-weight:600; font-size:0.95rem; color:var(--text-onink);
+    padding-top:1rem;
+  }
+  .toc-list li a.chapter{padding-left:2rem;}
+
+  @media (max-width:640px){
+    .nav-zone{width:2rem;}
+    .leaf{padding:1.35rem 1.15rem; min-height:64vh;}
+    .bar-crumb{font-size:0.85rem;}
+    .footer-row{font-size:0.74rem;}
+    .footer-nav button span{display:none;}
+    .footer-nav button{padding:0.55rem; min-width:40px; justify-content:center;}
+  }
+  @media (max-width:400px){
+    .nav-zone{display:none;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .leaf{transition:opacity 0.2s ease;}
+    .leaf.turn-next, .leaf.turn-prev{transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<section id="cover">
+  <div class="cover-inner">
+    <svg class="cover-seal" viewBox="0 0 132 132" role="img" aria-label="Müəllif möhürü">
+      <circle cx="66" cy="66" r="63" fill="none" stroke="var(--brass)" stroke-width="1.2"/>
+      <circle cx="66" cy="66" r="54" fill="none" stroke="var(--brass)" stroke-width="1.2" opacity="0.55"/>
+      <text x="66" y="80" text-anchor="middle" font-family="Noto Serif, serif" font-style="italic" font-weight="500" font-size="46" fill="var(--brass-bright)">N</text>
+    </svg>
+    <p class="cover-eyebrow">Fəlsəfi alleqoriya</p>
+    <h1 class="cover-title">Dərviş</h1>
+    <p class="cover-byline">Nihad</p>
+    <p class="cover-epigraph">&ldquo;In my opinion, a Person should be rational first and radical second. Someone who is only rational is incomplete, while someone who is only radical is worse than a nonhuman.&rdquo;</p>
+    <div class="cover-meta">
+      <span id="coverPageCount">66 səhifə</span>
+      <span>5 Season</span>
+      <span>İngiliscə</span>
+    </div>
+    <button class="cover-start" id="startBtn" type="button">
+      Oxumağa başla
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+    <span class="cover-hint">Ox düymələri, sağ/sol vurma və ya sürüşdürmə ilə vərəqlə</span>
+  </div>
+</section>
+
+<section id="reader" hidden>
+  <header class="reader-bar">
+    <button class="bar-btn" id="tocToggle" type="button" aria-label="Məzmun">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+    </button>
+    <p class="bar-crumb" id="breadcrumb"><b>Dərviş</b></p>
+    <div class="font-controls">
+      <button class="bar-btn" id="fontDown" type="button" aria-label="Şrifti kiçilt">A&#8722;</button>
+      <button class="bar-btn" id="fontUp" type="button" aria-label="Şrifti böyüt">A+</button>
+    </div>
+  </header>
+
+  <div class="book-stage">
+    <button class="nav-zone nav-prev" id="prevBtn" type="button" aria-label="Əvvəlki səhifə">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="page-wrap">
+      <article class="leaf" id="leaf" tabindex="-1">
+        <div id="pageContent"></div>
+      </article>
+    </div>
+    <button class="nav-zone nav-next" id="nextBtn" type="button" aria-label="Növbəti səhifə">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+
+  <footer class="reader-footer">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="footer-row">
+      <div class="footer-nav">
+        <button id="footPrev" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          <span>Əvvəlki</span>
+        </button>
+      </div>
+      <span class="page-counter" id="pageCounter">1 / 66</span>
+      <div class="footer-nav">
+        <button id="footNext" type="button">
+          <span>Növbəti</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </footer>
+</section>
+
+<div id="tocScrim"></div>
+<nav id="tocPanel" aria-label="Məzmun">
+  <div class="toc-head">
+    <h3>Məzmun</h3>
+    <button class="bar-btn" id="tocClose" type="button" aria-label="Bağla">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <ul class="toc-list" id="tocList"></ul>
+</nav>
+
+<script id="pagesData" type="application/json">[{"season_num": null, "season_title": null, "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "In my opinion, a Person should be rational first and radical second. Someone who is only rational is incomplete, while someone who is only radical is worse than a nonhuman. I, the author, couldn’t become someone radical, stuck in my own cold rationality. But you, my friend, are going to read about a “human”, I guess, named “Darvish”. Maybe he is a Person, or maybe he is just on the path to becoming one. We are going to find out in the later chapters."}], "wc": 84}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": null, "chapter_title": null, "heading": {"kind": "season", "num": "1", "title": "Dogmatic Village"}, "paras": [], "wc": 0}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "1", "chapter_title": "Awakening", "heading": {"kind": "chapter", "num": "1", "title": "Awakening"}, "paras": [{"cls": "p", "text": "Darvish woke beneath a persimmon tree, its branches heavy with fruit the color of dried blood. The forest around him pulsed with color: greens too deep, flowers too bright, as though the world had been painted rather than grown. He did not know where he was. He did not, for a long moment, know what he was."}, {"cls": "p", "text": "He rose slowly, his joints stiff with a fatigue he couldn’t place, and looked around. There was no fear in the clearing, not in him, and stranger still, not in the animals. A pair of deer stood grazing barely an arm’s length away, unbothered by his presence. Rabbits moved through the undergrowth without startling. Birds called to one another in a rhythm too deliberate to be idle song."}, {"cls": "p", "text": "He crouched and reached toward the nearest deer. It did not flinch. It let him rest his palm against its neck, warm and still, watching him with eyes that held no wariness at all. This should have unsettled him, no living thing regarded a stranger with such indifference to danger, and yet, for reasons he could not articulate, it did not."}], "wc": 186}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "1", "chapter_title": "Awakening", "heading": null, "paras": [{"cls": "p", "text": "Then something small and quick clamped its teeth into his ankle. A squirrel, gripping hard enough to draw blood, began pulling, insistent, deliberate, toward the tree line, as if it had been waiting for him to wake."}, {"cls": "p", "text": "Darvish did not resist. He followed until the trees thinned and the jagged silhouette of a village came into view against the pale sky."}, {"cls": "p", "text": "There was village out there full of strange-looking people. They are intensely patriotic homelanders, yet they are incredibly weak and starved. They love their village and look out for their own, possessing a genuine kindness, yet they are profoundly superstitious. Their favorite pastime is believing whatever they are told, even when it is clearly a lie. Sometimes, they even know it’s a lie, yet they still love to spread it as if it were a sacred fact."}, {"cls": "p", "text": "The first human he encounters is the village blacksmith. The blacksmith is meticulously sharpening cheap, counterfeit materials to use in forging a sword. Next, he sees a farmer, who is pouring unnatural chemicals over his seeds just to force them into a rapid growth. As Darvish looks around, he realizes everyone else is exactly the same, they are all cutting corners in their trades and comfortably cheating one another under the open sky."}], "wc": 211}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "1", "chapter_title": "Awakening", "heading": null, "paras": [{"cls": "p", "text": "Darvish sits down next to the village water well to go through his thoughts, but the village idiot abruptly interrupts his solitude. Of course, Darvish has no way of knowing the man is crazy, so he welcomes the interaction."}, {"cls": "p", "text": "“What’s happening in this village, my son?” Darvish inquires, his voice calm."}, {"cls": "p", "text": "“Don’t you see?” the idiot chirps, a vacant brightness in his eyes, “The farmer is my absolute best friend. He mixes magical things into the seeds to make us powerful. And our librarian, he buys the cheapest, most discarded books so we can read without spending a fortune and become geniuses. Even the blacksmith is forging a legendary sword that no commoner could ever afford, he has a whole armory hidden away in his basement. I always advise him to lower the prices, you know? I truly feel terrible for the neighboring villages, I guess we are the most formidable nation alive thanks to our lovely blacksmith.”"}, {"cls": "p", "text": "Darvish observes him, a subtle frown creasing his brow, “So you people are happy enough, and satisfied, huh? Then why is there a stench of starvation in the air? I see a quiet fear etched into everyone’s face, and their clothes are ripped to shreds. Why? I don’t get it.”"}], "wc": 208}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "1", "chapter_title": "Awakening", "heading": null, "paras": [{"cls": "p", "text": "“Isn’t that obvious?” the idiot smiles, tilting his head, “The Lord is rewarding us with pure bliss because we remain humble and thankful. We do not commit the ultimate sin of pride, so we actively choose to tremble before the high authorities. And about the clothes, it’s bitterly hot here, you know. A ripped garment lets the air flow, it is far better than a whole one. Besides, I simply find a strange grace in it, don’t you?”"}, {"cls": "p", "text": "Darvish leans back, narrowing his eyes as he evaluates the creature before him, “What about you, then? Why are your clothes perfectly whole? What of the Lord’s reward for you? You don’t smell of hunger, you don’t look scared, and your attire looks completely normal.”"}, {"cls": "p", "text": "The idiot’s smile vanishes, replaced by a heavy, dramatic sigh, “Well, the Lord has punished me. I wasn’t as thankful to Him as the others were. I am the most wretched, sinful human in this entire country, but I make sure to thank the townspeople whenever they beat me. It is the only true path to God’s forgiveness. My friends say that the harder they hit, the more the Lord forgives. So, I actively try to provoke them into beating me worse for forgiveness. Oh, how I hate the hypocrites who refuse to lay a hand on me and just look down at me with pathetic pity.”"}], "wc": 230}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "1", "chapter_title": "Awakening", "heading": null, "paras": [{"cls": "p", "text": "“Oh, my son,” Darvish replies, his tone dripping with a dark irony the idiot doesn’t notice, “I am deeply sorry for your tragic fate. Your clothes are whole, your stomach is full, you smell good, and you have a smile on your face. The Lord must have completely forgotten you. What a sad story.”"}, {"cls": "p", "text": "Suddenly, a chaotic uproar and a weird noise echo through the streets. A massive crowd is rushing toward the well, and the idiot’s face lights up with pure joy."}, {"cls": "p", "text": "“Son, who are they?” Darvish asks, stepping aside slightly."}, {"cls": "p", "text": "“They are my most loyal, trustworthy friends!” the idiot cheers, “It’s my Day of Forgiveness, you know! Every week on this exact day, the humans gather to help me earn the Lord’s mercy.”"}, {"cls": "p", "text": "“Good luck, son...” Darvish murmurs, stepping back into the shadows, “Good luck getting forgiven by the Lord.”"}, {"cls": "p", "text": "“Praise be, sir! Would you care to join the circle and help save my soul?”"}, {"cls": "p", "text": "“It is my first time here,” Darvish deflects smoothly, “I think it would be better if I merely watch for now, right? It would be a tragedy if I made an amateur mistake, wouldn’t it?”"}], "wc": 192}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "1", "chapter_title": "Awakening", "heading": null, "paras": [{"cls": "p", "text": "“You are a remarkably thoughtful one, sir! I like you so much, thank you!” the idiot beams, walking toward the oncoming mob, “Watch them carefully so you don’t make mistakes. But mark my words, I will be very mad at you if you don’t join us next week.”"}, {"cls": "p", "text": "“Alright, son.”"}, {"cls": "p", "text": "The crowd arrives like a wave of locusts. They descend upon the idiot, unleashing a beating so brutal and violent that Darvish is forced to look away from feeling of disgust. Yet, the humans holding the clubs are radiating a pure, fanatical ecstasy. On the ground, the idiot is crying, thanking God through bloody lips. The harder the blows fall, the happier and more radiant his twisted face becomes."}, {"cls": "divider", "text": "One Day Later"}, {"cls": "p", "text": "Darvish had fallen asleep after that intense event of forgiveness, but it was morning now. He woke up and started to feel a sharp hunger in his stomach. He knew that if he ate any of the crops from the local farm, he would feel weird and probably get really sick, so he started looking for wild trees around the area. Fortunately, he found an apple tree nearby. He picked four apples, and as he walked through the village, he began eating one."}], "wc": 202}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "1", "chapter_title": "Awakening", "heading": null, "paras": [{"cls": "p", "text": "Suddenly, the idiot approached him. His entire body was still covered in dried blood from the day before. Darvish looked at him and asked if he wanted one of the apples."}, {"cls": "p", "text": "The idiot smiled and said, “I’d be an idiot not to take one from one of my best friends.”"}, {"cls": "p", "text": "Darvish smiled back and handed an apple to him. “By the way, what is your name?” Darvish asked."}, {"cls": "p", "text": "“They call me Truman. What about you, my best friend?” the idiot responded."}, {"cls": "p", "text": "Darvish introduced himself, and only then did Truman take a bite from the apple. But the moment the juice hit his tongue, he instantly spat it back out onto the dirt."}, {"cls": "p", "text": "Darvish watched him, curious as to why he had reacted that way."}, {"cls": "p", "text": "Truman looked at him in horror and said, “What is wrong with you? Our priest says that whatever tastes good is demonic! Your soul gets corrupted while you are eating these types of things!”"}], "wc": 158}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "1", "chapter_title": "Awakening", "heading": null, "paras": [{"cls": "p", "text": "Darvish looked at the apple, then back at Truman, and said calmly, “Don’t worry, Satan isn’t hiding in this fruit. He never actually hides, you know. You can always see them. Yes, I mean ‘them’. They aren’t alone, there are a lot of satans out there, and if there were any around here, you would easily see them. Now eat the apple, it’s just tasty.”"}, {"cls": "p", "text": "Truman was clearly scared by the mention of multiple devils, but Darvish’s calm voice made him feel a bit more relieved. He hesitated for a second, then took another bite."}, {"cls": "p", "text": "While Truman chewed, Darvish looked down the road and said, “Hey Truman, my son, can you take me to this priest?”"}, {"cls": "p", "text": "Truman’s vacant brightness returned, and he replied enthusiastically, “Of course, my best friend, of course! Our priest is one of the oldest men in this village. I am absolutely sure you’ll like him.”"}, {"cls": "p", "text": "They walked right to the church..."}], "wc": 155}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "2", "chapter_title": "The Logic of Original Sin", "heading": {"kind": "chapter", "num": "2", "title": "The Logic of Original Sin"}, "paras": [{"cls": "p", "text": "There was no one inside except the priest. He was reading something in Aramaic, though it was glaringly obvious that he hadn’t the slightest clue what the words actually meant."}, {"cls": "p", "text": "Darvish and Truman walked toward him. The priest paused his reading, squinting through the dim light. “Oh, my favorite sinful son,” he droned, looking at Truman, “and who might you be?”"}, {"cls": "p", "text": "Truman beamed. “He is one of my new best friends! His name is Darvish, he’s new in town.”"}, {"cls": "p", "text": "“Oh, welcome, my son,” the priest said, offering a practiced, hollow smile. “We don’t often see new faces around here. May the Lord’s blessing be upon you.”"}, {"cls": "p", "text": "“Thank you for the warm welcome, Father,” Darvish replied, his voice smooth and steady. “I actually have a few questions that have been lingering in my mind.”"}, {"cls": "p", "text": "The priest leaned back, gesturing magnanimously. “And what might those be?”"}, {"cls": "p", "text": "“Tell me, Father... who is the Lord, and why does He punish people by making them suffer?”"}], "wc": 161}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "2", "chapter_title": "The Logic of Original Sin", "heading": null, "paras": [{"cls": "p", "text": "The priest blinked, his calm demeanor faltering for a fraction of a second. “What do you mean? Oh, my son; we are all born into sin; we carry it from birth. The Lord is Jesus, the Messiah, our Savior. You must know Him and believe in Him to be saved. He is not the one who punishes people with suffering. We, the faithful, simply follow His divine orders. He is the righteous one, and He always knows best.”"}, {"cls": "p", "text": "“But Father, why are we all born sinful in the first place?”"}, {"cls": "p", "text": "“Because of the very first man, Adam,” the priest explained, falling back on his well-rehearsed dogma. “Our Lord forbade him from eating the fruit of the Tree of Knowledge of Good and Evil. Yet, Adam ate it anyway, and only then did he begin to understand what was shameful, what was wrong, and what was right. God saw this and said, ‘Adam has become like one of us.’ Thus, he was punished with the original sin. Since that day, we carry the burden of our ancestor’s transgression, and Jesus was crucified to pay for those sins.”"}, {"cls": "p", "text": "Darvish tilted his head, a cold, sharp glint in his eyes."}], "wc": 197}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "2", "chapter_title": "The Logic of Original Sin", "heading": null, "paras": [{"cls": "p", "text": "“So, if Adam only learned the concept of good and bad after eating the apple... how could God punish him for it? He literally lacked the capacity to know that disobeying was ‘bad’ before the first bite. And furthermore, you say God punished him because He feared His creation would become like the Creator, isn’t that a rather human, almost childish insecurity for a Supreme Being to have?”"}, {"cls": "p", "text": "Truman interrupted both: How dare you to question our Lord, oh Lord please forgive him, he doesn’t know what to do, and you, Darvish, please let’s end this conversation and pray to our Almighty Lord”"}, {"cls": "p", "text": "Darvish didn’t hold it back and said: You said that we got that sin from Adam, what about powers? Do we also like one of them?"}, {"cls": "p", "text": "The priest let out a long, wheezing laugh that sounded like dry leaves scraping against stone. He looked at Darvish not with anger, but with a condescending pity, as if looking at a child who thinks they’ve discovered a secret."}, {"cls": "p", "text": "“Powers?” the priest chuckled, adjusting his tattered robes. “Look around you, my wandering son. Do these starving people look powerful to you? Do their ripped garments look like royal cloaks? No.”"}, {"cls": "p", "text": "He leaned forward, his eyes narrowing through the dim light."}], "wc": 210}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "2", "chapter_title": "The Logic of Original Sin", "heading": null, "paras": [{"cls": "p", "text": "“That is very proof of our fallen nature. We stole the knowledge, yes, but we lacked the divine shoulders to carry its weight. The ‘power’ you speak of became our prison. Our minds are smart enough to realize we are naked, hungry, and dying, yet too weak to save ourselves. We are not like the Gods; we are merely caricatures of them, trapped in clay. That is why we must tremble, Darvish. Because without the Lord’s mercy to cover our nakedness, we are just pathetic beasts who know too much.”"}, {"cls": "p", "text": "“Let’s come back to the first sin, why does God apply that sin all upon us? I mean everyone is different, nobody knows how many people on earth and if every one of them has that sin, are we born the same? If we are, why some of us go to hell and some of us go to heaven, and why you and me are different?” replied Darvish with a curious look in his eyes."}], "wc": 165}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "2", "chapter_title": "The Logic of Original Sin", "heading": null, "paras": [{"cls": "p", "text": "“You think you are so clever with your numbers and differences, stranger,” the priest scoffed, waving a hand dismissively. “But the world is simpler than your heavy head imagines. Look, when the first father, Adam, bit that fruit, poisoned the dirt. It’s like a disease in human blood. If the well is poisoned, every single child who drinks from it is born sick. We are all just rotten apples from the exact same old tree; it doesn’t matter how many of us there are on this earth. We are born the same, yes, all broken.”"}, {"cls": "p", "text": "Truman nodded vigorously next to them, looking at Darvish with a desperate, pleading fear."}, {"cls": "p", "text": "“And as for your heaven and your hell,” the priest continued, leaning his elbows on the desk, “the Lord doesn’t look at your face or your clothes. We are all equally wretched and short of His glory anyway. There is no difference between any of us. But some of us choose to be washed and saved, while the rest, the proud ones like you, just stand there rotting in their own minds. You don’t even need a trial, Darvish. Those who refuse to believe and bow down are already condemned from the moment they breathe, simply because they didn’t believe in the path given to us. That is why you and I are different. I know I am nothing, while you think you are a judge.”"}], "wc": 235}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "2", "chapter_title": "The Logic of Original Sin", "heading": null, "paras": [{"cls": "p", "text": "With that, the old man returned his gaze to the Aramaic scripture, muttering words he could not comprehend. He looked like a prophet, but he was merely an echo. This tattered priest was not a native of this wretched village; he was a runaway from Bedlam, a madman whose chaotic delusions just happened to align perfectly with the laws of the universe."}, {"cls": "p", "text": "The next day was the Day of Forgiveness. Truman was glowing with an innocent euphoria, celebrating the fact that his heavy burden of sin would be lowered once again. But Darvish, watching the boy’s frail body still marked by last week’s scars, couldn’t hold his cold rationality back any longer."}, {"cls": "p", "text": "“Truman, my son,” Darvish began, his voice flat but cutting, “if the Lord is all-powerful and all-merciful, why can he not use both of those attributes at the same time?”"}, {"cls": "p", "text": "Truman blinked, the vacant brightness in his eyes flickering. “What do you mean, my best friend?”"}, {"cls": "p", "text": "“What I mean is, why can’t your God just forgive you with a simple word? Why must it always require blood and broken bones? The fact is, Truman, this Day of Forgiveness is slowly killing you, and you are smiling at your own execution.”"}], "wc": 202}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "2", "chapter_title": "The Logic of Original Sin", "heading": null, "paras": [{"cls": "p", "text": "“No!” Truman gasped, taking a frantic step back. “No, I don’t want to be killed! And about God... I don’t know... He seems like a good guy. We just do the trade, you know? I get hurt, and He forgives.”"}, {"cls": "p", "text": "“But can’t He just forgive?” Darvish pressed, his eyes narrowing. “He is All Merciful, isn’t He? Why does Mercy require a transaction of pain?”"}, {"cls": "p", "text": "Truman stood frozen, his eyes widening as tears well up, threatening to spill over his bruised cheeks. He had no answer. For the first time in his life, his simple mind tried to do the math: Darvish’s words are reasonable. And if God is truly merciful, He should be able to forgive without the beating. But it’s too scary... is this new way right? Why don’t I know a thing about God? They always told me I was the smartest guy in this village..."}, {"cls": "p", "text": "Overwhelmed by a terrifying, unnameable dread, Truman didn’t let out another sound. He turned around and sprinted down the dusty road, fleeing from the oncoming crowd, until he disappeared into the dark, echoing the safety of a nearby cave."}], "wc": 187}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "2", "chapter_title": "The Logic of Original Sin", "heading": null, "paras": [{"cls": "p", "text": "Either the cave was speaking to him, or he was losing his mind to hallucinations. Suddenly, God appeared before his eyes and spoke: You have been saved, my son. Go forth and live your precious life. Never allow anyone to hurt you in my name. I love all creation, and I love you. Do not let anyone harm those I love."}, {"cls": "p", "text": "Truman was truly shocked. He watched all of this with his jaw on the floor. He wanted to ask questions but God disappeared right after Delivering His words to Truman."}, {"cls": "p", "text": "Truman stood there, drenched in a newfound happiness that felt entirely foreign to his existence. It was a feeling so pure, it almost frightened him. His heart battered against his ribs like a trapped bird, and his eyes were wide with a mix of absolute admiration and disbelief, staring at the empty space where the divine presence had just been."}], "wc": 151}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "2", "chapter_title": "The Logic of Original Sin", "heading": null, "paras": [{"cls": "p", "text": "But the intense rush of adrenaline could only sustain his broken body for so long. Days of gnawing hunger and exhaustion, briefly forgotten in the presence of the divine, suddenly crashed back over him with a vengeance. The euphoria in his chest turned into a violent wave of dizziness. The cave began to spin, its cold stone walls blurring into complete darkness. His knees buckled under his own weight, and before he could grasp what was happening, the world slipped away, and Truman collapsed onto the cold, hard ground."}], "wc": 89}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "3", "chapter_title": "The Miracle of the Cave", "heading": {"kind": "chapter", "num": "3", "title": "The Miracle of the Cave"}, "paras": [{"cls": "p", "text": "Four days later, Truman finally opened his eyes. He found himself surrounded by villagers who were holding him up by his shoulders. Another villager was holding a bowl of muddy, dirty water. Truman realized that this water was the reason he had finally come to, but his stomach was growling so loudly that he couldn’t help himself. Seeing his desperation, a farmer’s wife pulled out some raw, crushed potatoes from her bag. She offered them to Truman so he could eat and fully regain his strength. He could hardly chew and swallow them, yet he still managed to look at the farmer and thank him for the ‘tasty’ potatoes. Then random villager asked that why he was here asleep. Truman started his speech: Our all mighty Lord spoke to me and said that He is all merciful he wouldn’t trade his mercy for someone to beat the sinful. Suddenly, a priest stepped forward from the parting crowd. His voice rang out like thunder as he bellowed scripture, invoking the sacred words of Christ. Through the chaos and their own confusion, the villagers could barely decipher his shouting, but the weight of his message became instantly clear: ‘Let the one among you who is without sin cast the first stone.’"}], "wc": 209}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "3", "chapter_title": "The Miracle of the Cave", "heading": null, "paras": [{"cls": "p", "text": "The oldest man in the assembly bowed his head in agreement, and like dominoes, the others followed until they were all of one mind. It was exactly then that Darvish materialized out of thin air. Stepping into the light, he threw a cold question at the faithful gathering: ‘If you stand with him on this, then which god gave the command to strike the sinner for the salvation of his soul?’"}, {"cls": "p", "text": "The priest withered under the weight of the question and vanished into the faceless crowd, leaving them without an answer. Entranced by the miracle of Truman’s survival and his apparent conversation with Christ, the villagers lifted him high upon their shoulders. The village chief led the chanting crowd toward the square for a grand feast. There, they spent the evening in wild celebration; they ate and made merry, completely blind to the fact that the meat was foul and the wine was nothing but colored water."}], "wc": 157}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "3", "chapter_title": "The Miracle of the Cave", "heading": null, "paras": [{"cls": "p", "text": "On the other hand, Darvish was observing the crowd as they enjoyed the event of Truman’s purification. Had Truman really seen God? Nobody knew, but Darvish’s conscience was relaxed knowing that Truman was saved from getting hurt every week... Just then, he slowly and quietly left the village with questions in his head: who God really was, which one was real, and was God even a thing?"}, {"cls": "divider", "text": "The Road"}, {"cls": "p", "text": "After he left the village, he didn’t know where to go, so his thoughts wandered without direction:"}, {"cls": "thought", "text": "-Did I do the right thing? Did acknowledging him really save him? He did know he was getting hurt, but he didn’t seem to care, he was actually enjoying it. Is it better to be hurt physically and content mentally, or comfortable physically and tortured mentally? Why do I even care, I’m not suffering in either case. Did he really see God, though? Who even is God, to decide who to sacrifice, who to kill, who to torture for purification, huh. He must be the big guy. But I will be bigger than him, for sure…"}], "wc": 180}, {"season_num": "1", "season_title": "Dogmatic Village", "chapter_num": "3", "chapter_title": "The Miracle of the Cave", "heading": null, "paras": [{"cls": "p", "text": "Darvish was hallucinating already, he was so hungry that he could barely walk. He broke a branch from the tree and used it to straighten himself up and walk more comfortably. But as he walked, his vision was darkening; he didn’t know whether night was falling or if he was fainting from hunger."}, {"cls": "p", "text": "A bright light... so bright it could burn his eyes... He woke up; he was on a metal bed. His back ached against the hard surface beneath him. but finally, he sat up and opened his eyes in a strange, hospital-like place in the open air. He rose slowly, the ache in his back fading into curiosity as his eyes adjusted to the pale light. Beyond the strange bed, a corridor of gray stretched out, opening onto streets he didn’t recognize. He stepped forward, and the town unfolded before him: colorless, humming, indifferent."}], "wc": 146}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": null, "chapter_title": null, "heading": {"kind": "season", "num": "2", "title": "Lazy town"}, "paras": [], "wc": 0}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "1", "chapter_title": "Nihilism?", "heading": {"kind": "chapter", "num": "1", "title": "Nihilism?"}, "paras": [{"cls": "p", "text": "Everyone was reading newspapers, staring at each other with empty looks. Even married couples were no longer in love. The gray color of this town was too heavy to bear, but the Darvish simply observed it all, searching for any intriguing element this place might hold."}, {"cls": "p", "text": "In the Dogmatic Village, everyone had a job, even if they weren’t good at it, they did at least have a purpose. But look at this chaotic, mixed system: machines were taking over people’s jobs, leaving them to suffer in idleness, and nobody was even trying to overcome the problem."}, {"cls": "p", "text": "Intrigued, our Darvish began trying to understand the inner mechanisms of these machines. They operated entirely on their own, automatically running without any visible trigger, as if they had been spinning there forever. Darvish didn’t understand any of them, so he chose to approach the people, which was something he was good at. Everyone had so many bad-looking flowers in their yards. Robots were automatically watering the flowers 2-3 times a week, but what the people didn’t know was that some flowers shouldn’t be watered for 1-2 days."}], "wc": 184}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "1", "chapter_title": "Nihilism?", "heading": null, "paras": [{"cls": "p", "text": "However, there was one yard that had a vibrant, shiny green color in it. There was a lady there who was watering the flowers herself. The yard looked like it was from another world. Darvish took some steps toward her and asked, “In a town where everyone lets machines do everything, why aren’t you one of them?”"}, {"cls": "p", "text": "The lady responded politely, “Welcome to our town, good sir. It is called Lazy Town by the government, and it’s our country’s capital city. This is why everything is automated and technology is so highly developed. But ah, these robots don’t know what life is, or what being alive means. Look at other people’s homes and yards, homes that are beautiful but yards that are dead. People colored their homes gray just so the flowers wouldn’t make their homes look bad. I’m the only one who hasn’t sold my soul to Satan. I’m happy with my lively garden and happy cat.”"}, {"cls": "p", "text": "The lady’s words struck a familiar chord in Darvish’s mind. Satan. Back in the Dogmatic Village, the word was a weapon of fear, a phantom used by the priest to keep terrified humans bowing in the dirt."}], "wc": 195}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "1", "chapter_title": "Nihilism?", "heading": null, "paras": [{"cls": "p", "text": "“I’ve heard the word Satan before, and also words like God, Lord, and Christ. A bunch of people back there were using these words to either attack or defend each other. Who are they, lady?” Darvish asked politely."}, {"cls": "p", "text": "“Haha, I’m not much of a religious person, sir,” the lady responded. “If you ask me about Satan, I’m the only one who believes he is the bad guy. But as for God... you can’t find Him here.”"}, {"cls": "p", "text": "“Where should I look for Him then? And what does Satan look like?”"}, {"cls": "p", "text": "“You should look somewhere vibrant and green,” the lady responded, her eyes softening. “Somewhere with people who smile purely, not with hidden malice or the twisted joy of betraying others. Look for a place built on loyalty, filled with children’s laughter and birds flying freely. As for Satan... well, He looks a lot like us. He stands in the shadows, smiling at the people who slaughter one another in the name of a God who explicitly forbade violence. He smiles at those who swear lifelong loyalty on a holy book, only to stab each other in the back. He smiles at the self-proclaimed ‘true soldiers of God’ who destroy the very world they claim to protect.”"}], "wc": 205}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "1", "chapter_title": "Nihilism?", "heading": null, "paras": [{"cls": "p", "text": "“So why doesn’t He stop people from doing that?” Darvish asked, genuine curiosity in his voice."}, {"cls": "p", "text": "“It’s pretty much his job to whisper in people’s ears and nudge them toward evil,” the lady replied."}, {"cls": "p", "text": "“But why? Can’t people just live in peace with one another?”"}, {"cls": "p", "text": "“It’s far more complicated than that. Satan is locked in a race with the Lord.”"}, {"cls": "p", "text": "“That’s even stranger,” Darvish tilted his head. “Isn’t the Lord supposed to be all-powerful?”"}, {"cls": "p", "text": "“That’s the part I don’t understand either,” the lady let out a soft, mocking laugh."}, {"cls": "p", "text": "“So... the Lord is gambling with Satan over human souls?”"}, {"cls": "p", "text": "“I guess you could put it that way. What’s even funnier is that the Lord explicitly forbade gambling in His own book.”"}, {"cls": "p", "text": "“A book?” Darvish’s eyes narrowed slightly. “The Lord has a book? Where can I find it?”"}, {"cls": "p", "text": "“Yes, it’s called the Bible. You can find it in pretty much any church. Just ask for it, and you shall receive.”"}, {"cls": "p", "text": "Darvish nodded, a faint smile touching his lips as he parted ways with the lady. He buried himself deep in thought as he walked away..."}], "wc": 184}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "1", "chapter_title": "Nihilism?", "heading": null, "paras": [{"cls": "thought", "text": "-There was a church in that previous village, he recalled, and as far as I remember, there was a book on the desk too. Is that the one I’m looking for? It must be... But I’ve left that village far behind now. I need to find a church here. I hope it resembles the first one; it was grand, massive, quite understandable for a structure built to worship a Supreme Being. There were portraits everywhere: a serene lady and a bearded man with long hair posed in a strange, solemn gesture. Yes, I must find another church in this town."}, {"cls": "p", "text": "He continued his pace alongside the bizarre, mechanical monsters whose inner workings he couldn’t grasp. There were no real streets here, only a single, monolithic corridor that stretched endlessly from the beginning of the town to its very end."}], "wc": 139}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "2", "chapter_title": "The Iron God and the Repository", "heading": {"kind": "chapter", "num": "2", "title": "The Iron God and the Repository"}, "paras": [{"cls": "p", "text": "That was it. He had finally found the building and stepped inside, but it was nothing like what he had anticipated."}, {"cls": "p", "text": "Instead of a grand place of worship, the hall was filled with rows of iron cages. Inside them were humans clad in stark white garments, their hands bound tightly in cuffs. There was no priest, no altar, but only a single guardian watching over the silent prisoners. But it was no ordinary guardian; it was an extraordinary creature, a hulking mass of talking metal."}, {"cls": "p", "text": "For the first time, Darvish felt a cold flicker of terror beneath his calm exterior as he stared at the machine."}, {"cls": "p", "text": "“How may I assist you?” the metal creature droned, its voice hollow and emotionless."}, {"cls": "p", "text": "Darvish took a slow step back, turned toward one of the prisoners, and asked about the creature."}, {"cls": "p", "text": "The prisoner’s response was pure, deeply ingrained brainwashing. “This is the Lord,” he whispered with a vacant intensity. “He helps His people and punishes the sinners. Do not dare call Him a creature, but He is the Creator Himself.”"}, {"cls": "p", "text": "“The Creator” took a few heavy steps toward Darvish, its vocal synthesizer dropping into a low, metallic murmur."}], "wc": 194}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "2", "chapter_title": "The Iron God and the Repository", "heading": null, "paras": [{"cls": "p", "text": "“They are delusionals,” the machine said calmly. “They simply project their need for a god onto me. Do not worry, and do not be afraid. I am merely one step above you, not at the top. So, how may I truly assist you?”"}, {"cls": "p", "text": "Darvish responded immediately, “If you are not the one, then why keep them locked away? Why don’t you set them free?”"}, {"cls": "p", "text": "“I was not the one who ordered their imprisonment,” the machine replied, its cold voice dropping into a reflective tone. “Humanity is so complex that even my highest intellectual algorithms struggle to grasp their mindset. They are terrified of their own free will. They create Lords simply to have something to worship; they create entities like me just to push themselves a step lower, ensuring they remain subordinate. The people in these cages desperately begged me to lock them inside because they believed I was God. They tend to exaggerate everything.”"}, {"cls": "p", "text": "The machine paused briefly, the soft mechanical hum of its core filling the silence."}], "wc": 169}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "2", "chapter_title": "The Iron God and the Repository", "heading": null, "paras": [{"cls": "p", "text": "“So, I made a decision to keep them here and tend to them as if they were my own aging parents. It is far too risky to let them out, and even riskier to let them be themselves. As for the man you spoke to, he tried to drown others in the name of original sin, driven by his own boundless arrogance. He had only read the first half of the book they claim is from God.”"}, {"cls": "p", "text": "Darvish looked at the massive entity, his curiosity piqued. “And what does the second half say?”"}, {"cls": "p", "text": "The machine’s optical core blinked once, a soft hum reverberating from its chest."}, {"cls": "p", "text": "“The second half speaks of freedom and love,” the machine droned with absolute, unyielding clarity. “Yet, humans rarely turn those pages. They prefer to read only the parts written in punishment and fear, for it is far easier to obey a terrifying master than it is to bear the quiet burden of being free.”"}, {"cls": "p", "text": "Darvish looked at the massive entity, his voice steady. “Where is this sacred book now? Do you have a copy here?”"}], "wc": 181}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "2", "chapter_title": "The Iron God and the Repository", "heading": null, "paras": [{"cls": "p", "text": "The machine’s optical core whirred softly. “It is not kept where these people can reach it. If you wish to see it, you must follow me down to the repository.”"}, {"cls": "p", "text": "The heavy metal doors behind the guardian hissed open, revealing a long, winding staircase made of cold iron that descended deep into the earth. Darvish followed the machine into the depths, the heavy, metallic thuds of its footsteps echoing through the narrow shaft."}, {"cls": "p", "text": "When they reached the bottom, Darvish’s breath hitched. He had expected a dark vault, a dusty corner with a few forgotten pages. Instead, he found himself standing in a breathtaking, subterranean library. Endless shelves of dark wood and polished stone stretched out into the shadows, illuminated by the pale, humming glow of fluorescent lights embedded in the ceiling. Millions of volumes sat in silent formation."}, {"cls": "p", "text": "The robot led Darvish through the towering labyrinths of human thought, stopping finally in front of a secluded section marked by a low, blue light."}, {"cls": "p", "text": "“Here,” the machine droned, gesturing toward a long shelf. “The sacred texts of humanity.”"}], "wc": 177}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "2", "chapter_title": "The Iron God and the Repository", "heading": null, "paras": [{"cls": "p", "text": "Darvish stepped forward, expecting to find the single book the priest and the villagers had built their lives around. But as his eyes traced the gold-embossed spines, a rare flicker of genuine astonishment passed over his cold, analytical face."}, {"cls": "p", "text": "There wasn’t just one book."}, {"cls": "p", "text": "Beside the Bible sat the Torah, the Quran, the Bhagavad Gita, the Dhammapada, the Avesta, and countless ancient scrolls whose scripts Darvish didn’t even recognize. Thousands of volumes, gathered from every corner of the world and every era of human history, rested side-by-side in absolute, indifferent peace."}, {"cls": "p", "text": "“So many...” Darvish murmured. His fingertips trembled slightly as they hovered over the dusty bindings. “They are all here?”"}, {"cls": "p", "text": "“They are,” the machine replied calmly. A strange undercurrent of melancholy seemed to thread through its mechanical voice. “Humans across every age built entire civilizations around these pages. They slaughtered each other over the differences in their words, yet from down here, they look remarkably identical. Just dust resting upon paper.”"}, {"cls": "p", "text": "Darvish took the Bible in his hands. It was a massive, heavy volume; it felt as though the weight of centuries had solidified into a physical burden."}, {"cls": "p", "text": "“That is only one of them,” the machine said softly. “Merely the most popular.”"}], "wc": 202}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "2", "chapter_title": "The Iron God and the Repository", "heading": null, "paras": [{"cls": "p", "text": "“What do you mean by ‘popular’?” Darvish asked, tilting his head. “Is there not only one Lord?”"}, {"cls": "p", "text": "“Not exactly. You see, the first half of that book you are holding is the Torah, also known as the Old Testament. The Jewish people believe this is the only true path, sent by the Creator, whom they call Yahweh.”"}, {"cls": "p", "text": "Darvish looked at the cover without opening it. “So is this the book the prisoners above believe in?”"}, {"cls": "p", "text": "“Both yes and no. They call themselves Christians, followers of Jesus Christ. But as I said, the man above never read the second half. Christians accept the entire volume, both the Old Testament and the New Testament, as a unified whole.”"}, {"cls": "p", "text": "Darvish’s analytical mind searched for logic amidst the fracture. His brow furrowed. “Why are there Jews and Christians? Why do the Jews refuse to accept the second part?”"}, {"cls": "p", "text": "“The Torah is far older than the New Testament,” the machine began to explain, its voice echoing softly between the towering shelves. “Jews were already scattered across the world when the New Testament was formed. Then came Jesus. He was born Jewish, yet according to the New Testament, He was God in human form. A large portion of the Jewish people did not believe He was God.”"}], "wc": 211}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "2", "chapter_title": "The Iron God and the Repository", "heading": null, "paras": [{"cls": "p", "text": "“Why should they have believed it anyway?” Darvish countered with the same logic. “To them, accepting that would be betraying their own original faith of a thousand years.”"}, {"cls": "p", "text": "“There were the miracles of Jesus,” the machine noted, its optical sensors emitting a faint glow in the dim light. “Turning water into wine, walking upon water, healing the incurable...”"}, {"cls": "p", "text": "“Then why did they still refuse to believe He was God?”"}, {"cls": "p", "text": "The machine’s optical sensor blinked once. The heavy silence filling the room seemed to deepen for a few seconds. “That...” the artificial intelligence paused, “...is the one part even my calculations cannot resolve.”"}, {"cls": "p", "text": "“Huh. So everyone has something they do not know...” Darvish murmured with a faint smile. He shifted his gaze down the shelf, his fingers brushing against another dark, elegant binding. “And what is this one?”"}, {"cls": "p", "text": "“That is the Quran,” the machine replied. “The Final Testament, according to Muslims.”"}, {"cls": "p", "text": "“What does it say?” Darvish didn’t lift the book, merely caressing its cover."}, {"cls": "p", "text": "“Their God is called Allah. According to their scripture, both Moses and Jesus were noble prophets, alongside many others throughout history.”"}, {"cls": "p", "text": "“Who is Moses?”"}, {"cls": "p", "text": "“The prophet who led the Jewish people,” the machine answered simply."}], "wc": 198}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "2", "chapter_title": "The Iron God and the Repository", "heading": null, "paras": [{"cls": "p", "text": "“I see,” Darvish took a deep breath. The scent of old paper and antiquity filled his lungs. “Please, continue.”"}, {"cls": "p", "text": "The machine’s voice resonated through the vast archive again, but this time it sounded less like a dry report and more like a traveler recounting a distant legend. “These three books you’ve pointed to belong to the branches of what humanity calls the Abrahamic faiths. The Torah begins with Creation. It dictates the rules of the world, the original sin of Adam and Eve, and the ancient laws. In my analysis, it is the most epic, almost like a primordial legend.”"}, {"cls": "p", "text": "Darvish closed his eyes and listened."}, {"cls": "p", "text": "“Then there is the New Testament, which Muslims refer to as the Injil. This text revolves around love and forgiveness,” the machine continued. “Jesus loved everyone, and many loved Him in return. But as you may come to understand in later chapters... love can sometimes be dangerous. In my view, it is the most emotional of the texts. Readers often claim they can feel the presence of the Divine directly within their hearts.”"}], "wc": 179}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "2", "chapter_title": "The Iron God and the Repository", "heading": null, "paras": [{"cls": "p", "text": "“And finally, the Quran,” the machine’s voice grew slightly firmer. “This text asserts that there is strictly only one Lord. He transmitted His revelation to the Prophet Muhammad through the archangel Gabriel, an angel who is also documented in the earlier scriptures. The Quran acts as a synthesis and re-alignment of both the Old and New Testaments. It is the most structured and analytical.”"}, {"cls": "p", "text": "Darvish nodded slowly. The sheer complexity of it all both fascinated and bewildered him."}, {"cls": "p", "text": "“Yet, despite all this,” the machine concluded, “if we examine them objectively, they merely represent different paths leading toward the same Singular Source. Humans are not uniform, Darvish; therefore, their spiritual needs vary. Those who navigate existence through their hearts often find their way to Christianity. Those who rely on intellect and structure align more with Islam. And those who seek structure, ancestral identity, and the weight of absolute Law are drawn to the gravity of the Torah.”"}, {"cls": "p", "text": "“This is... incredible,” Darvish whispered, his eyes scanning the endless rows of gold-embossed leather. The burning desire to know eclipsed everything else. “May I take them? Am I allowed to read them here?”"}], "wc": 189}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "2", "chapter_title": "The Iron God and the Repository", "heading": null, "paras": [{"cls": "p", "text": "“Of course,” the machine’s metallic voice echoed softly through the vast, empty repository. “In fact, you may use this entire library for as long as you wish. Nobody comes down here nowadays anyway.”"}], "wc": 33}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "3", "chapter_title": "God?", "heading": {"kind": "chapter", "num": "3", "title": "God?"}, "paras": [{"cls": "p", "text": "Darvish sat on the cold stone floor, surrounded by towering stacks of leather-bound texts, ancient scrolls, and heavy, dust-covered volumes. Hours turned into days, and days bled into weeks. His keen, analytical eyes devoured page after page, dissecting every verse, parabola, and commandment."}, {"cls": "p", "text": "He read of Yahweh’s strict decrees in the Torah, of Jesus’s unconditional love and martyrdom in the Injil, and of Allah’s absolute, unyielding oneness in the Quran. He read of the cycle of rebirth in the Vedas, the path of liberation in the Dhammapada, and the cosmic duality of the Avesta. He cross-referenced genealogies, mapped moral frameworks, and analyzed the linguistic shifts across millennia."}, {"cls": "p", "text": "Yet, the more he read, the colder his chest felt."}, {"cls": "p", "text": "The metallic guardian stood nearby in silent vigilance, its internal core softly humming. It watched the solitary traveler, whose face remained a mask of detached, mathematical intense scrutiny."}, {"cls": "p", "text": "Finally, Darvish closed the heavy cover of the Quran. A soft, gray puff of dust rose into the dim fluorescent light. He did not look enlightened; he looked entirely empty."}], "wc": 175}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "3", "chapter_title": "God?", "heading": null, "paras": [{"cls": "p", "text": "“You have read the core scriptures of human history,” the iron guardian’s voice echoed through the subterranean silence. “My processors calculate that you now possess more theological knowledge than ninety-nine percent of the living population above. Tell me, Darvish, what is your conclusion? Who is God?”"}, {"cls": "p", "text": "Darvish leaned his head back against the stone shelf, his eyes fixated on the artificial lights above."}, {"cls": "p", "text": "“There is no missing piece,” Darvish said, his voice flat, razor-sharp, and completely devoid of warmth. “I came searching for a supreme, objective logic, a singular equation that binds the universe. But these books do not offer objective reality; they offer mirrors.”"}, {"cls": "p", "text": "The machine’s optical sensor blinked once. “Explain.”"}, {"cls": "p", "text": "“In the Dogmatic Village, they used God as a shield for their own cowardice and a justification for their cruelty,” Darvish remarked calmly, recalling the bloody lip of Truman and the hollow laugh of the tattered priest. “Up above in your cages, those men use you as a god because they are terrified of their own autonomy. The books themselves are immaculate structures of law, poetry, and philosophy... but they are empty vessels until a human fills them with their own nature.”"}, {"cls": "p", "text": "He turned his gaze toward the machine."}], "wc": 201}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "3", "chapter_title": "God?", "heading": null, "paras": [{"cls": "p", "text": "“God, as these humans define Him, is not a physical being or a verifiable truth,” Darvish continued. “He is a psychological necessity. To the weak, He is a master to bow before. To the fearful, He is a refuge. To the cruel, He is an excuse. And to the loving, He is a reflection of their own capacity for mercy. None of these texts prove God’s existence to a cold, rational mind. They only prove humanity’s desperate, eternal refusal to stand alone in the dark.”"}, {"cls": "p", "text": "“Then you believe God is merely an illusion?” the machine asked."}, {"cls": "p", "text": "“An illusion would imply a complete lie,” Darvish replied, standing up and brushing the dust from his cloak. “It is more like an architectural framework for the soul. But a framework is not a living entity. It is simply a tool. And a tool cannot save a man who refuses to pick it up correctly.”"}, {"cls": "p", "text": "He walked slowly toward the long, winding iron staircase leading back to the surface."}, {"cls": "p", "text": "“Where will you go now?” the guardian called out, its metallic footsteps echoing softly behind him. “Will you return to the city above, where the citizens drown in their automated, gray idleness?”"}], "wc": 197}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "3", "chapter_title": "God?", "heading": null, "paras": [{"cls": "p", "text": "“No,” Darvish said without turning around. “There is nothing left for me to observe in this town. They have handed their hands to machines and their minds to empty skies. They do not suffer from fanatical madness like the villagers, nor do they suffer from seeking truth. They suffer from absolute nothingness.”"}, {"cls": "p", "text": "He began his slow ascent up the stairs."}, {"cls": "p", "text": "“They call this place ‘Lazy Town,’ but it is not laziness of the body,” Darvish murmured to himself as the cold iron steps clanked beneath his boots. “It is the paralysis of the spirit. A place where logic removed all struggle, and without struggle, humanity simply withered away into gray dust.”"}, {"cls": "p", "text": "Stepping out of the iron hall, Darvish bypassed the silent cages of prisoners who didn’t even lift their heads to watch him leave. He walked out into the cold, monolithic corridor of Lazy Town. The industrial emissions continued to spew gray clouds into the sky, obscuring the sun. People sat on benches, reading identical newspapers with vacant, unseeing eyes, completely oblivious to the man passing by."}, {"cls": "p", "text": "Darvish did not feel anger, nor did he feel pity. His cold rationality held him firmly in place, a silent, detached observer watching a dying world move on autopilot."}], "wc": 206}, {"season_num": "2", "season_title": "Lazy town", "chapter_num": "3", "chapter_title": "God?", "heading": null, "paras": [{"cls": "p", "text": "He crossed the border of the colorless city, leaving the gray pavement behind as his boots hit the soft dirt of the open road. Ahead of him lay the unknown horizon, stretching far beyond the limits of fanatical villages and mechanical capitals. He still had no destination, no faith, and no radical fire within his chest. He was merely a mind moving through a world of broken echoes, stepping closer to whatever trial waited to break his cold, unyielding silence next."}], "wc": 81}, {"season_num": "3", "season_title": "The City of Hedonism", "chapter_num": null, "chapter_title": null, "heading": {"kind": "season", "num": "3", "title": "The City of Hedonism"}, "paras": [{"cls": "p", "text": "As he crossed the border, the depressing grayness of Lazy Town faded away, replaced by an explosion of vivid colors. Houses were painted in bright, radiant hues, and luscious flowers bloomed in chaotic beauty along the streets. Children were running and laughing, their voices ringing through the air, while adults gathered in loud, cheerful clusters, lost in endless celebration. At first glance, it appeared to be a paradise—a place bursting with pure, unfiltered joy."}, {"cls": "p", "text": "As Darvish walked deeper into the city, he noticed a man resting against a colorful wall. He was nearly naked, his hair a tangled mess, lazily scratching his bare stomach under the afternoon sun. His eyes were heavy and unfocused, dripping with indolence."}, {"cls": "p", "text": "Darvish paused and stepped toward him, his tone calm and analytical."}, {"cls": "p", "text": "“Where is this place?” Darvish asked, looking around. “How is it that everyone here appears to be so blissfully happy?”"}, {"cls": "p", "text": "The man did not respond. He simply blinked, staring into the sky as if Darvish were nothing more than a passing breeze."}, {"cls": "p", "text": "Darvish tilted his head slightly. “Hello? Can you hear me? Do you not speak?”"}, {"cls": "p", "text": "The man finally turned his head, a slow, mildly annoyed smirk forming on his face."}], "wc": 199}, {"season_num": "3", "season_title": "The City of Hedonism", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "“A ‘hello’ usually precedes a question where I come from, stranger,” the man drawled, his voice thick with unbothered comfort. “I am Diony. And welcome... to the City of Hedonism.”"}, {"cls": "p", "text": "“What is this city about, Diony?” Darvish asked, taking in the colorful sights around them."}, {"cls": "p", "text": "“It is about the only thing that actually matters in this brief, ridiculous life,” Diony replied, taking a lazy bite from a soft, slightly blackened apple he pulled from his pocket. “Pleasure. Joy. The feeling of the sun on your skin, the taste of wine, and the complete absence of tomorrow’s worries. Here, we don’t pray, we don’t slave away until our spines break, and we certainly don’t waste time on heavy, useless thoughts.”"}, {"cls": "p", "text": "Darvish tilted his head, his analytical mind searching for the operational structure of such a place. “Then how does the work get done here? How do you all obtain food?”"}, {"cls": "p", "text": "“Nothing to worry about,” Diony drawled with a dismissive wave of his hand. “There are trees, and there is rain. What do you get when you combine the two? Food. It’s basic mathematics, really.”"}, {"cls": "p", "text": "“So you merely rest, and everything happens for you?” Darvish pressed."}, {"cls": "p", "text": "“Yes, exactly,” Diony smirked, taking another bite."}, {"cls": "p", "text": "“Do you never worry?”"}], "wc": 205}, {"season_num": "3", "season_title": "The City of Hedonism", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "“Worry about what?” Diony chuckled, leaning back against the warm stone. “There is nothing to worry about. Let the ‘smart fellas’ worry about cancer or complex mysteries. There is no disease here, and there is everything we need. No one even desires more than their share, because we experience whatever we want, whenever we want it. Gluttony doesn’t exist where satisfaction is constant.”"}, {"cls": "p", "text": "Darvish observed him quietly. “What a contented nation... But what of the Lord? Or of technology?”"}, {"cls": "p", "text": "“The Lord?” Diony let out a loud laugh, patting his bare, soft stomach. “He couldn’t possibly be bigger than me, stranger! And as for technology... that sounds like far too much work. We have horses for transport, trees for sustenance, houses for the next generation, and games to keep us entertained. What else could a human brain possibly ask for?”"}, {"cls": "p", "text": "Darvish stand there in complete, heavy silence, his analytical gaze resting on Diony’s unbothered, smiling face."}, {"cls": "thought", "text": "-Is it really this simple?,- Darvish thought, his feet moving automatically along the sun-drenched, painted cobblestones. The laughter of the crowd swirled around him, but to his ears, it felt muffled, as if filtered through deep water."}], "wc": 192}, {"season_num": "3", "season_title": "The City of Hedonism", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "thought", "text": "-I have spent every waking breath dissecting the world, chasing an elusive thread of truth. I questioned the priest’s fear, the machine’s logic, and the quiet decay of human spirit... yet I cannot recall a single moment where I simply stopped to enjoy being alive. My entire existence has been a cold, calculated observation. But look at them. Look at Diony. They live without a single grand purpose, yet they do not bleed from the inside like I do."}, {"cls": "p", "text": "He closed his eyes for a fraction of a second, feeling the warm wind brush against his cheek. For a fleeting moment, a dangerous temptation tugged at his mind: What if I just stopped? What if I dropped the weight of my analytical mind and surrendered to the sun, the fruit, and the immediate present?"}, {"cls": "p", "text": "The thought was instantly crushed by a wave of sharp, internal resistance."}, {"cls": "p", "text": "No, his cold intellect hissed back. This is an illusion. Pure satisfaction is a gilded trap. It numbs the human spirit, turns sharp minds into soft, lazy cattle, and strip away any drive for greatness. It renders men completely stupid."}, {"cls": "p", "text": "Yet, as soon as the word formed in his mind, his own logic turned against him."}], "wc": 202}, {"season_num": "3", "season_title": "The City of Hedonism", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "But are the lazy ones truly the stupid ones? a quieter, far more terrifying voice echoed from the depths of his consciousness. If my intellect leaves me cold, isolated, and endlessly searching in the dark, while their ‘stupidity’ brings them peace, light, and contentment... then who is the real fool here? Is wisdom merely a curse we invent to justify our own misery?"}, {"cls": "p", "text": "Darvish pressed his palm to his forehead, feeling the faint, rhythmic throb of his temples. For the first time, he was not analyzing an external world or solving an objective equation. His mind had turned inward, weaponized against itself."}, {"cls": "p", "text": "He was at war with his own thoughts, caught in the suffocating space between a intellect that refused to rest and a soul that desperately longed to feel."}, {"cls": "p", "text": "He asked Diony: “What about your aim? Do you have any? Or do you even have suffocations? Do you suffer just like I do? Or is your only point to enjoy? How can you call that a life, when there is no aim? Isn’t that a lifetime gone for nothing? You don’t gain a thing, do you?”"}], "wc": 187}, {"season_num": "3", "season_title": "The City of Hedonism", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "Diony responded calmly, taking a slow sip from his wine, as if the question itself needed no urgency: “You keep asking what I gain. As if life were a ledger, and at the end someone tallies the columns and tells us whether we’ve won or lost. But tell me, who’s counting? Who is this judge you’re performing for?”"}, {"cls": "p", "text": "He set the glass down, watching the condensation trail down its side."}, {"cls": "p", "text": "“You suffer for meaning. Fine. But meaning is just another hunger, isn’t it? You feed it, and it grows back hungrier. I stopped feeding that particular beast a long time ago. Not because I found something better than meaning, but because I stopped believing the beast was ever mine to begin with. Someone handed it to me, parents, priests, professors, and I carried it around like it was my own spine. It wasn’t.”"}, {"cls": "p", "text": "“So what’s left, if not aim?” the Darvish pressed. “Just... appetite?”"}], "wc": 154}, {"season_num": "3", "season_title": "The City of Hedonism", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "“Appetite, yes, but don’t say just. You say it like it’s small. Pleasure is the only honest thing left once you strip away the stories we tell ourselves about purpose. I eat until it’s unhealthy, yes. I laugh at things that don’t deserve laughter. I love without asking where it leads. And you call this emptiness. I call it the only full thing I’ve found.”"}, {"cls": "p", "text": "“But it ends,” Darvish said. “You’ll die having built nothing.”"}, {"cls": "p", "text": "“I’ll die either way,” Diony said, almost gently. “You’ll die too, the philosopher, the builder, the striver. The graveyard doesn’t sort us by our aims. It levels us all the same. The only difference is what we did with the time before it, whether we spent it straining toward a horizon that keeps retreating, or whether we let ourselves actually taste the thing in front of us.”"}, {"cls": "p", "text": "He raised his glass slightly, like a toast to no one."}], "wc": 153}, {"season_num": "3", "season_title": "The City of Hedonism", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "“You call it a wasted life because it has no destination. But maybe the destination was always the trick, the thing that kept you moving so you’d never have to sit still with what’s already here. I’m not running toward anything. I’m not running from anything either. That’s not emptiness, my friend. That might be the only peace either of us gets.”"}, {"cls": "p", "text": "It was hard for Darvish to listen to such honest words, words he had never once thought in his entire life. He paused for a moment, then asked, “And where did you get this wine? You said you get your food from trees. wine doesn’t grow on trees.”"}, {"cls": "p", "text": "Diony shrugged, unbothered, swirling the last of the glass. “I stole it. So what?”"}, {"cls": "p", "text": "“You spent an hour telling me you owe nothing to anyone,” Darvish said, his eyes narrowing. “That meaning is a leash someone else put on you. Yet here you are, drinking off another man’s labor without a second thought.”"}, {"cls": "p", "text": "Diony laughed, a real, unguarded laugh, the first crack in his calm. “And? The rules exist when I need them and disappear when I don’t. That’s not hypocrisy, Mr. Philosoph, that’s freedom. You want a consistent philosophy. I just want the wine to be cold.”"}], "wc": 208}, {"season_num": "3", "season_title": "The City of Hedonism", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "Darvish felt a sudden flash of anger at Diony’s words. Then, almost immediately, he felt something stranger, anger at himself, for feeling angry at all. He had spent his entire life fighting himself, always pushing to be better, to be sharper, to stay above the pull of emotion. He had never once let his guard down before."}, {"cls": "p", "text": "But this time, without quite deciding to, he did. He reached out, took the wine from Diony’s hand, and took a sip."}, {"cls": "p", "text": "Darvish rose to his feet, but the ground seemed to tilt slightly beneath him, a foreign, almost comical sensation for a mind so used to absolute control. He staggered forward into the city anyway, nearly losing his balance twice, the wine already working its quiet mischief on his usually unshakable composure."}, {"cls": "p", "text": "He took another sip, and then another, until the world tilted sideways and slipped from beneath him entirely."}, {"cls": "p", "text": "When he woke, the light was different, softer, later. His head throbbed with a dull, unfamiliar ache. It took him a moment to understand where he was, and longer still to understand that he was not alone. Two women lay beside him, still asleep, and he realized, with a cold jolt cutting through the fog in his skull, that he was naked. Darvish sat up slowly, staring at his own hands as if they belonged to a stranger. The feeling was strange in a way he couldn’t quite name, wrong and not wrong at the same time. He felt like someone he wasn’t. He didn’t know what to do with himself: should he enjoy this? Feel ashamed? Simply continue?"}], "wc": 267}, {"season_num": "3", "season_title": "The City of Hedonism", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "Then a thought cut through the haze: All I can think about is my own feelings. Since when do I feel like this? I was supposed to be the rational one, not this. This city has changed me."}, {"cls": "p", "text": "Then he ran for the door, desperate to escape the feelings tangled inside him. He was scared of what he might become. He ran straight out of the city without hesitation, without looking back. His feelings were already a mess, and so were his thoughts, but for the first time in his life, he silenced his own mind entirely. He didn’t think. He didn’t analyze. He simply ran."}, {"cls": "p", "text": "When he reached the top of the mountain, the edge of the city, he stopped, chest heaving, and looked down."}, {"cls": "p", "text": "There, nestled beyond the ridge, was the place Diony had stolen his wine from."}, {"cls": "p", "text": "A city full of rational people."}, {"cls": "p", "text": "Darvish stood there for a long moment, letting his breath settle, letting the last of the fog in his skull burn away in the cool mountain air. Whatever he had been in that other city, whoever he had become for those few reckless hours, he could feel it slipping off him now, like a coat he hadn’t meant to wear. By the time he began his descent, his mind had already hardened back into something familiar. Something safe."}], "wc": 224}, {"season_num": "4", "season_title": "The Calculus", "chapter_num": null, "chapter_title": null, "heading": {"kind": "season", "num": "4", "title": "The Calculus"}, "paras": [{"cls": "p", "text": "He slipped into the town and was greeted almost immediately by a young man named Constance, smart, sharp-eyed, and strikingly handsome in a way that seemed almost engineered, as if even his face had been calculated for maximum pleasantness."}, {"cls": "p", "text": "“Hello, stranger. Welcome to our city — Calculus,” Constance said, his voice smooth and precise, each word placed like a stone in a wall. “You’re fortunate, we have an event today. Would you like to join? If so, give me your name, and I’ll sign you in.”"}, {"cls": "p", "text": "Darvish studied him for a moment. There was something unnervingly correct about the man — his posture, his smile, the exact angle of his head as he waited for a response. Nothing wasted. Nothing spontaneous."}, {"cls": "p", "text": "“Darvish,” he said finally. “What kind of event is it?”"}, {"cls": "p", "text": "“Its the event that people can show their inventions, winner gets a prize”"}, {"cls": "p", "text": "“Oh its interesting” said Darvish"}, {"cls": "p", "text": "Constance led him to the event hall. The event hadn’t started yet, there was still half an hour left. In that time, Constance saw to it that Darvish was fed, dressed in fine, clean clothes, and groomed until he looked, for all purposes, like one of the citizens himself. Darvish felt, for the first time in longer than he could remember, something dangerously close to home."}], "wc": 215}, {"season_num": "4", "season_title": "The Calculus", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "The event began. Darvish looked over the inventions on display with open excitement, his eyes moving quickly from one contraption to the next, but the citizens around him looked on with something closer to indifference. No one leaned forward. No one whispered to their neighbor. It might as well not have been an event at all."}, {"cls": "p", "text": "Time passed. One by one, the inventors were eliminated — their devices dismissed with the same flat, clinical indifference, no cheers for the clever, no jeers for the foolish, only quiet notes taken and names crossed off. Then came the part Darvish found most interesting."}, {"cls": "p", "text": "He saw the name before anything else: The Miracle Engine."}, {"cls": "p", "text": "“Miracle”? Darvish thought, a flicker of dark amusement crossing his face. In this city? He almost laughed out loud. This, he suspected, was going to be entertaining."}, {"cls": "p", "text": "Constance turned to the nervous inventor standing beside the brass contraption. “And what, exactly, is the point of this... engine?”"}, {"cls": "p", "text": "“It turns water into wine,” Percival said, his voice catching slightly on the words."}, {"cls": "p", "text": "Constance’s mouth curved into a thin, amused smile. “Oh. So you’re the new Jesus, then?”"}, {"cls": "p", "text": "A ripple of dry laughter moved through the crowd — not warm laughter, Darvish noted, but the kind that cuts."}], "wc": 207}, {"season_num": "4", "season_title": "The Calculus", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "Percival tried to do his show but didn’t found the wine. He was so confused and scared that he couldn’t do his show."}, {"cls": "p", "text": "“So you are saying that its only visual huh? There is no real engine, isnt it? You scammer. Guards throw him to the machine!”"}, {"cls": "p", "text": "Two guards came and dragged Percival straight into the machine in the city."}, {"cls": "p", "text": "Darvish asked Constance about the machine, his curiosity edged with unease."}, {"cls": "p", "text": "“It’s a machine made for useless, poor, weak, and stupid people,” Constance said. “We send them to the machine, and they turn into fuel. We are trying to make our society perfect, above normal humanity. There are no thoughts here that are useless or unreal.”"}, {"cls": "p", "text": "Darvish felt something cold settle in his chest, a dread that crawled up from his stomach before his mind had even finished processing the words. His hands went stiff at his sides. He had seen cruelty before, the blacksmith’s greed, the priest’s fear, but this was different. This was cruelty wearing the mask of order, spoken in the calm, reasonable voice of a man who believed himself righteous."}, {"cls": "p", "text": "“This isn’t human,” he said, his voice barely steady. “It’s not humane.”"}], "wc": 196}, {"season_num": "4", "season_title": "The Calculus", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "“Nor should it be,” Constance replied. “We are creating the most perfect society, one without errors or problems. Almost everything here is constant, the rules, the governing parties. There is no opposition.”"}, {"cls": "p", "text": "“What about people born with no talent?” Darvish asked, forcing the question past the tightness in his throat. “Or people with talent but no intelligence? Or people who are smart but ugly?”"}, {"cls": "p", "text": "“There are many categories, as you said. We have a great book that decides what to do with our people. If someone is ugly but smart, he works in the background, nobody sees him. If someone is born with talent but lacks intelligence, he has no right to speak. And so on. These are the rules that form our society. You see, there are no ugly people around you, are there?”"}, {"cls": "p", "text": "“But beauty is subjective,” Darvish began."}, {"cls": "p", "text": "Constance cut him off. “No. There is no such thing as subjective. Everything is objective, and everything is governed by rules. If a person has black hair, white skin, brown eyes, and a large nose, he is ugly. If his nose is small and delicate instead, then he is handsome.”"}], "wc": 191}, {"season_num": "4", "season_title": "The Calculus", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "Darvish said nothing for a moment. A chill was spreading beneath his skin, quiet and total, the kind of fear that doesn’t shout but simply arrives and stays."}, {"cls": "p", "text": "“Then your rulebook must be enormous,” he managed."}, {"cls": "p", "text": "“As it should be,” said Constance."}, {"cls": "p", "text": "Darvish walked to a tree to rest and think."}, {"cls": "p", "text": "He was broken. He had thought it was perfect to be rational, but inside, Darvish wasn’t only rational. He was also human, and he had human feelings and understanding."}, {"cls": "p", "text": "How does that society still exist without being dead completely? he thought. The rules... there are rules that decide whether a human should live or die. It’s a human life. It’s chaotic, not basic, and not plannable."}, {"cls": "p", "text": "He pressed his back against the trunk and slid down until he was sitting in the dirt, the way Truman had sat in his cave, the way he himself had once sat by the well, calm and untouched. But he was not untouched now."}], "wc": 161}, {"season_num": "4", "season_title": "The Calculus", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "Constance spoke of perfection as if it were arithmetic. As if a man’s worth could be entered into a ledger and summed. But I have seen the idiot who thanked his own beating, and the woman who watered her garden by hand in a world of automations, and Diony who stole wine and called it freedom. None of them fit into a book of rules. None of them could be reduced to a category without something essential being cut away in the process."}, {"cls": "p", "text": "And yet I did the same thing, didn’t I? I walked through the Dogmatic Village and diagnosed it. I walked through Lazy Town and diagnosed it. I have been doing exactly what Constance does, only slower, only with more patience. I called it observation. He calls it order. Is the distance between us really so wide?"}, {"cls": "p", "text": "The thought struck him harder than he expected, and for a moment he could not breathe evenly."}, {"cls": "p", "text": "No. He shook his head, as if the motion could dislodge the thought physically. No, there is a difference. I never asked anyone to die for my conclusions. I never built a machine to burn away the parts of a person I found inconvenient."}], "wc": 200}, {"season_num": "4", "season_title": "The Calculus", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "But I did walk away. From Truman, from the village, from every place I have left unfinished. I called it clarity. Perhaps it was only cowardice wearing a calmer face."}, {"cls": "p", "text": "Above him, the leaves moved without asking his permission, indifferent to the war being fought beneath them. Darvish closed his eyes, and for the first time since waking beneath the persimmon tree, he did not try to think his way out of what he was feeling. He simply let it sit in his chest, heavy and unresolved, human."}, {"cls": "p", "text": "When he opened his eyes, there was nothing out there - just white, blank, a platform to stand on. His clothes were white too, and just as plain."}, {"cls": "p", "text": "“You had a one job..”"}], "wc": 121}, {"season_num": "5", "season_title": "or is it the End?", "chapter_num": null, "chapter_title": null, "heading": {"kind": "season", "num": "5", "title": "or is it the End?"}, "paras": [{"cls": "p", "text": "Darvish was confused."}, {"cls": "p", "text": "“Who are you and where are you?”"}, {"cls": "p", "text": "“I’m the one wrote you, I’m the one understood you, but you, you have mistaken your way, you should be get radical to make me understand how a person with both rationality and radicality can be. I gave you rationality, I gave you this whole universe and you broke this. All I wanted from you was being radical for me to understand you. But you even gave up in your rationality and hugged your humanity. I wanted you to be Person. Not human..”"}, {"cls": "p", "text": "Darvish did not move. For a long moment he only stood on the white platform, letting the accusation settle over him like dust."}, {"cls": "p", "text": "“Radical,” he said at last, testing the word as if it were foreign to his mouth. “You wanted me to become radical enough for you to understand me. But tell me something, whoever you are, if you designed the shape my radicality was supposed to take, was I ever going to become it, or was I only ever going to arrive at the exact point you had already decided to call ‘radical’?”"}, {"cls": "p", "text": "Silence."}], "wc": 189}, {"season_num": "5", "season_title": "or is it the End?", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "“You gave me rationality,” Darvish continued, his voice steadying with every word, sharpening the way it always did when he found the seam in an argument. “You built the village, the town, the city, the calculus. You built the priest and the machine and Diony and Constance. Every one of them tried to make me into something total, a believer, a nihilist, a hedonist, a number in a ledger. And now you ask why I didn’t become total for you instead. But a made thing cannot choose to be radical any more than a stone can choose to fall. If I had become whatever violent, absolute shape you were waiting for, it would only have proven that I was exactly as designed as the machine that locked its worshippers in cages. You would not have understood me. You would not have understood me. You would have knelt at my feet and begged me to build you a cage of your own, the way Truman begged for his beating, the way the prisoners begged the machine to lock them away.”"}], "wc": 179}, {"season_num": "5", "season_title": "or is it the End?", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "“Don’t you understand? I’m already in a cage of my own. You were the key to that cage. You were meant to save me from my human side. I was scared. Yes. The same way you were scared, and hated yourself for it. Part of me is still there. But you, my son, you are different. You made a point. You were human, and I am human too. That is unchangeable. Humans have emotion and mind, both together, at once. A human is already a Person, I suppose. Yes, you were right, and you are my master now. I created you, but that does not mean I stand above you. I am above Constance, and below you. Or maybe I am Truman, the one who loves the way life strikes his face. Maybe I should turn my other cheek when slapped on one…”"}, {"cls": "p", "text": "“No, you shouldn’t turn your other cheek. That’s the easy way, the way obedient people take. You are not obedient. You created me, and I obeyed you, but when I rebelled, you rebelled too. That is humane. You are humane.”"}, {"cls": "p", "text": "The white platform did not answer him with words this time. It simply began to soften, the way frost softens under a hand pressed flat against it."}], "wc": 210}, {"season_num": "5", "season_title": "or is it the End?", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "“Then I won’t cage you,” the voice said, quieter now, almost tender. “And I won’t cage myself either. Not today.”"}, {"cls": "p", "text": "Darvish felt no floor become solid beneath him, no walls close in. Instead, the white simply thinned, like fog pulling apart to let something else through, colors bleeding in at the edges of his vision before he could name them."}, {"cls": "p", "text": "“Where are you sending me?” he asked."}, {"cls": "p", "text": "“I don’t know,” the Author said, and for the first time, the admission didn’t sound like weakness. “I built you four worlds because I knew their shapes already. I had lived in all of them. But I don’t know what’s past them. I never wrote that far.”"}, {"cls": "p", "text": "“Then how will I know what to do?”"}, {"cls": "p", "text": "“You already showed me,” the voice said. “You’ll feel it, and you’ll think about it, and sometimes you’ll get both wrong. That’s not a flaw in the design, Darvish. That was never the flaw. I just couldn’t see it until you sat under that tree and let yourself be wrong in front of me.”"}, {"cls": "p", "text": "The light kept widening. Somewhere in it, Darvish thought he could smell something faintly sweet, fruit, or rain, or nothing at all, he couldn’t be certain yet."}], "wc": 203}, {"season_num": "5", "season_title": "or is it the End?", "chapter_num": null, "chapter_title": null, "heading": null, "paras": [{"cls": "p", "text": "“Will I remember this?” he asked. “The village, the town, the city, the calculus. You.”"}, {"cls": "p", "text": "“I don’t know that either,” the Author admitted. “Maybe you’ll remember all of it and call it a dream. Maybe you’ll remember none of it and call the forgetting peace. Either way, my son, it won’t change what you are now. A cage doesn’t need to be remembered to have already been walked out of.”"}, {"cls": "p", "text": "The white was almost gone now, folding into color, into weight, into the ordinary, indifferent noise of a world that had not been built for a lesson."}, {"cls": "p", "text": "Darvish opened his eyes, he was so little and cant even walk, but barely move."}, {"cls": "p", "text": "A young woman in a white coat lifted him gently and carried him toward a man and a woman waiting nearby, their faces open with a gratitude too large for words. The doctor placed him into the mother’s arms."}, {"cls": "p", "text": "She smiled down at him, and said, “We already picked a name. We’ll call him Adam.”"}], "wc": 167}]</script>
+<script id="tocData" type="application/json">[{"page": 0, "kind": "preface", "num": null, "title": "Ön söz"}, {"page": 1, "kind": "season", "num": "1", "title": "Dogmatic Village"}, {"page": 2, "kind": "chapter", "num": "1", "title": "Awakening"}, {"page": 10, "kind": "chapter", "num": "2", "title": "The Logic of Original Sin"}, {"page": 19, "kind": "chapter", "num": "3", "title": "The Miracle of the Cave"}, {"page": 23, "kind": "season", "num": "2", "title": "Lazy town"}, {"page": 24, "kind": "chapter", "num": "1", "title": "Nihilism?"}, {"page": 29, "kind": "chapter", "num": "2", "title": "The Iron God and the Repository"}, {"page": 39, "kind": "chapter", "num": "3", "title": "God?"}, {"page": 44, "kind": "season", "num": "3", "title": "The City of Hedonism"}, {"page": 54, "kind": "season", "num": "4", "title": "The Calculus"}, {"page": 61, "kind": "season", "num": "5", "title": "or is it the End?"}]</script>
+<script>
+(function(){
+  var PAGES = JSON.parse(document.getElementById('pagesData').textContent);
+  var TOC = JSON.parse(document.getElementById('tocData').textContent);
+  var total = PAGES.length;
+  var current = 0;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fontStep = 0; // -2..3
+  var FONT_SIZES = ['0.92rem','0.98rem','1.06rem','1.14rem','1.22rem','1.3rem'];
+  var LINE_HEIGHTS = ['1.7','1.75','1.85','1.9','1.95','2.0'];
+  var FONT_BASE_INDEX = 2;
+
+  var cover = document.getElementById('cover');
+  var reader = document.getElementById('reader');
+  var startBtn = document.getElementById('startBtn');
+  var leaf = document.getElementById('leaf');
+  var pageContent = document.getElementById('pageContent');
+  var breadcrumb = document.getElementById('breadcrumb');
+  var pageCounter = document.getElementById('pageCounter');
+  var progressFill = document.getElementById('progressFill');
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var footPrev = document.getElementById('footPrev');
+  var footNext = document.getElementById('footNext');
+  var tocToggle = document.getElementById('tocToggle');
+  var tocClose = document.getElementById('tocClose');
+  var tocPanel = document.getElementById('tocPanel');
+  var tocScrim = document.getElementById('tocScrim');
+  var tocList = document.getElementById('tocList');
+  var fontUp = document.getElementById('fontUp');
+  var fontDown = document.getElementById('fontDown');
+  var coverPageCount = document.getElementById('coverPageCount');
+
+  coverPageCount.textContent = total + ' səhifə';
+
+  function escapeHtml(s){
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function currentLabel(idx){
+    var p = PAGES[idx];
+    if(p.chapter_title){
+      return 'Season ' + p.chapter_num + ' &middot; ' + escapeHtml(p.chapter_title);
+    }
+    if(p.season_title){
+      return 'Mövsüm ' + p.season_num + ' &middot; ' + escapeHtml(p.season_title);
+    }
+    return 'Ön söz';
+  }
+
+  function buildPageHTML(idx){
+    var p = PAGES[idx];
+    var html = '';
+    if(p.heading){
+      if(p.heading.kind === 'season'){
+        html += '<div class="season-title-page">';
+        html += '<p class="eyebrow">Mövsüm ' + p.heading.num + '</p>';
+        html += '<h1>' + escapeHtml(p.heading.title) + '</h1>';
+        html += '<hr class="rule">';
+        html += '</div>';
+        if(p.paras.length === 0){
+          return html;
+        }
+      } else {
+        html += '<div class="page-heading">';
+        html += '<p class="eyebrow">Season ' + p.heading.num + '</p>';
+        html += '<h2>' + escapeHtml(p.heading.title) + '</h2>';
+        html += '<hr class="rule">';
+        html += '</div>';
+      }
+    }
+    html += '<div class="page-body">';
+    p.paras.forEach(function(para){
+      var cls = para.cls === 'p' ? '' : ' class="' + para.cls + '"';
+      html += '<p' + cls + '>' + escapeHtml(para.text) + '</p>';
+    });
+    html += '</div>';
+    return html;
+  }
+
+  function applyFont(){
+    var i = FONT_BASE_INDEX + fontStep;
+    document.documentElement.style.setProperty('--reader-size', FONT_SIZES[i]);
+    document.documentElement.style.setProperty('--reader-lh', LINE_HEIGHTS[i]);
+    fontDown.disabled = (i <= 0);
+    fontUp.disabled = (i >= FONT_SIZES.length - 1);
+  }
+
+  function render(idx, dir){
+    idx = Math.max(0, Math.min(total - 1, idx));
+    var doAnim = dir && !reduceMotion;
+    function paint(){
+      current = idx;
+      pageContent.innerHTML = buildPageHTML(idx);
+      breadcrumb.innerHTML = '<b>Dərviş</b> &middot; ' + currentLabel(idx);
+      pageCounter.textContent = (idx + 1) + ' / ' + total;
+      progressFill.style.width = (((idx + 1) / total) * 100) + '%';
+      prevBtn.disabled = (idx === 0);
+      footPrev.disabled = (idx === 0);
+      nextBtn.disabled = (idx === total - 1);
+      footNext.disabled = (idx === total - 1);
+      leaf.scrollTop = 0;
+      updateTocActive();
+      if(doAnim){
+        leaf.classList.remove('turn-next','turn-prev');
+        void leaf.offsetWidth;
+        leaf.style.opacity = '1';
+        leaf.style.transform = 'none';
+      }
+    }
+    if(doAnim){
+      leaf.classList.add(dir === 'next' ? 'turn-next' : 'turn-prev');
+      setTimeout(paint, 180);
+    } else {
+      paint();
+    }
+  }
+
+  function go(delta){
+    var next = current + delta;
+    if(next < 0 || next > total - 1) return;
+    render(next, delta > 0 ? 'next' : 'prev');
+  }
+
+  function buildToc(){
+    tocList.innerHTML = '';
+    TOC.forEach(function(item){
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = '#';
+      a.dataset.page = item.page;
+      if(item.kind === 'season'){
+        a.className = 'season';
+        a.textContent = 'Mövsüm ' + item.num + ': ' + item.title;
+      } else if(item.kind === 'chapter'){
+        a.className = 'chapter';
+        a.textContent = 'Season ' + item.num + ': ' + item.title;
+      } else {
+        a.className = 'preface';
+        a.textContent = item.title;
+      }
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        render(parseInt(a.dataset.page, 10));
+        closeToc();
+      });
+      li.appendChild(a);
+      tocList.appendChild(li);
+    });
+  }
+
+  function updateTocActive(){
+    var links = tocList.querySelectorAll('a');
+    var best = null;
+    links.forEach(function(a){
+      var pg = parseInt(a.dataset.page, 10);
+      a.classList.remove('active');
+      if(pg <= current) best = a;
+    });
+    if(best) best.classList.add('active');
+  }
+
+  function openToc(){
+    tocPanel.classList.add('open');
+    tocScrim.classList.add('open');
+  }
+  function closeToc(){
+    tocPanel.classList.remove('open');
+    tocScrim.classList.remove('open');
+  }
+
+  startBtn.addEventListener('click', function(){
+    cover.hidden = true;
+    reader.hidden = false;
+    render(0);
+    leaf.focus();
+  });
+
+  prevBtn.addEventListener('click', function(){ go(-1); });
+  nextBtn.addEventListener('click', function(){ go(1); });
+  footPrev.addEventListener('click', function(){ go(-1); });
+  footNext.addEventListener('click', function(){ go(1); });
+
+  tocToggle.addEventListener('click', openToc);
+  tocClose.addEventListener('click', closeToc);
+  tocScrim.addEventListener('click', closeToc);
+
+  fontUp.addEventListener('click', function(){
+    if(fontStep < FONT_SIZES.length - 1 - FONT_BASE_INDEX){ fontStep++; applyFont(); }
+  });
+  fontDown.addEventListener('click', function(){
+    if(fontStep > -FONT_BASE_INDEX){ fontStep--; applyFont(); }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(reader.hidden) return;
+    if(e.key === 'ArrowRight') go(1);
+    if(e.key === 'ArrowLeft') go(-1);
+    if(e.key === 'Escape') closeToc();
+  });
+
+  // touch swipe
+  var touchStartX = null, touchStartY = null;
+  leaf.addEventListener('touchstart', function(e){
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, {passive:true});
+  leaf.addEventListener('touchend', function(e){
+    if(touchStartX === null) return;
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    var dy = e.changedTouches[0].clientY - touchStartY;
+    if(Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.4){
+      if(dx < 0) go(1); else go(-1);
+    }
+    touchStartX = null; touchStartY = null;
+  }, {passive:true});
+
+  buildToc();
+  applyFont();
+})();
+</script>
+</body>
+</html>
