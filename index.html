@@ -53,6 +53,42 @@
     background-size:240px 120px;
   }
 
+  /* Yağış effekti üçün səth */
+  #rain-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* Yağış səsi idarəetmə düyməsi */
+  .rain-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: rgba(20, 17, 14, 0.85);
+    border: 1px solid var(--brass);
+    color: var(--text-onink);
+    padding: 10px 16px;
+    border-radius: 30px;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .rain-toggle:hover {
+    background: var(--brass);
+    color: var(--ink-950);
+  }
+
   a{color:inherit;}
   img,svg{display:block;max-width:100%;}
 
@@ -334,6 +370,9 @@
 </style>
 </head>
 <body>
+<canvas id="rain-canvas"></canvas>
+<button class="rain-toggle" id="rainToggleBtn" type="button">🌧️ Yağış Səsi: Bağlı</button>
+
 <a class="skip-link" href="#main">Əsas məzmuna keç</a>
 
 <nav class="topnav">
@@ -393,7 +432,7 @@
             </div>
             <p class="language">Azərbaycanca</p>
             <p class="book-genre">Psixoloji roman · Qeyri-xətti struktur</p>
-            <p class="book-desc">Yaddaş itkisi yaşayan qəhrəman öz keçmişini araşdırarkən, axtardığı qatilin əslində kim olduğunu addım-addım üzə çıxarır.</p>
+            <p class="book-desc">Yaddaş itkisi yaşayan qəhrəman öz keçmişini araşdıran zaman axtardığı qatilin əslində kim olduğunu addım-addım üzə çıxarır.</p>
             <a class="book-link" href="#">Ətraflı oxu →</a>
           </div>
         </article>
@@ -431,7 +470,7 @@
             </div>
             <p class="language">İngiliscə</p>
             <p class="book-genre">Fəlsəfi alleqoriya</p>
-            <p class="book-desc">Sadəlövh bir səyyahın həyat, iman və mənasızlıq haqqında dərsləri götürdüyü, fəlsəfi nağıl tərzində yazılmış alleqorik roman.</p>
+            <p class="book-desc">Sadəlövh bir səyyahın həyat, iman və mənasızlıq haqqında dərslər götürdüyü, fəlsəfi nağıl tərzində yazılmış alleqorik roman.</p>
             <a class="book-link" href="Person.html">Ətraflı oxu →</a>
           </div>
         </article>
@@ -449,9 +488,7 @@
             <span id="cardNumberText">0000 0000 0000 0000</span>
             <button type="button" id="copyCardBtn" aria-label="Kart nömrəsini kopyala">Kopyala</button>
           </div>
-          <!-- Buy Me a Coffee hesabınızın linki ilə əvəz edin, məs: https://buymeacoffee.com/adiniz -->
           <a class="support-btn primary" href="#">Buy Me a Coffee</a>
-          <!-- Patreon profilinizin linki ilə əvəz edin, məs: https://patreon.com/adiniz -->
           <a class="support-btn" href="#">Patreon</a>
         </div>
         <p class="support-note">Hər bağış, növbəti fəsli yazmaq üçün bir fincan çay demək.</p>
@@ -472,6 +509,113 @@
 </main>
 
 <script>
+  /* --- Yağış effekti (Canvas) --- */
+  const canvas = document.getElementById('rain-canvas');
+  const ctx = canvas.getContext('2d');
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  const drops = [];
+  const maxDrops = 100;
+
+  for (let i = 0; i < maxDrops; i++) {
+    drops.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      length: Math.random() * 20 + 10,
+      speed: Math.random() * 7 + 4,
+      opacity: Math.random() * 0.3 + 0.1
+    });
+  }
+
+  function animateRain() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = 'rgba(127, 174, 148, 0.4)';
+    ctx.lineWidth = 1;
+    ctx.lineCap = 'round';
+
+    for (let i = 0; i < drops.length; i++) {
+      let d = drops[i];
+      ctx.beginPath();
+      ctx.moveTo(d.x, d.y);
+      ctx.lineTo(d.x - 1, d.y + d.length);
+      ctx.stroke();
+
+      d.y += d.speed;
+      d.x -= 0.3; // Külək effekti üçün yüngül maililik
+
+      if (d.y > canvas.height) {
+        d.y = -20;
+        d.x = Math.random() * canvas.width;
+      }
+    }
+    requestAnimationFrame(animateRain);
+  }
+  animateRain();
+
+  /* --- Yağış Səsi (Web Audio API vasitəsilə təbii Pink/White Noise generatoru) --- */
+  let audioCtx = null;
+  let isPlaying = false;
+  let noiseNode = null;
+  let gainNode = null;
+
+  function toggleRainSound() {
+    const btn = document.getElementById('rainToggleBtn');
+    
+    if (!isPlaying) {
+      // Audio kontekstini başladırıq
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      
+      // Səs səviyyəsini tənzimləmək üçün GainNode
+      gainNode = audioCtx.createGain();
+      gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime); // Rahatladıcı fon səviyyəsi
+      gainNode.connect(audioCtx.destination);
+
+      // Təbii yağış səsi üçün White/Pink Noise yaratmaq
+      const bufferSize = 2 * audioCtx.sampleRate;
+      const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const output = noiseBuffer.getChannelData(0);
+      
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1;
+      }
+
+      noiseNode = audioCtx.createBufferSource();
+      noiseNode.buffer = noiseBuffer;
+      noiseNode.loop = true;
+
+      // Yağış səsinə bənzətmək üçün yüksək tezlikləri filtrdən keçiririk (Lowpass Filter)
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(800, audioCtx.currentTime);
+
+      noiseNode.connect(filter);
+      filter.connect(gainNode);
+      noiseNode.start();
+
+      isPlaying = true;
+      btn.textContent = '🌧️ Yağış Səsi: Açıq';
+    } else {
+      if (noiseNode) {
+        noiseNode.stop();
+        noiseNode.disconnect();
+      }
+      if (audioCtx) {
+        audioCtx.close();
+      }
+      isPlaying = false;
+      btn.textContent = '🌧️ Yağış Səsi: Bağlı';
+    }
+  }
+
+  document.getElementById('rainToggleBtn').addEventListener('click', toggleRainSound);
+
+  /* --- Mövcud interaktiv skriptlər --- */
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var coarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
