@@ -367,6 +367,22 @@
     .reveal{opacity:1; transform:none; transition:none;}
     .hero-name-shadow{transition:none;}
   }
+  /* Typewriter Effekti Üslubları */
+.typewriter-target {
+  visibility: hidden; /* Animasiya başlayana qədər görünmür */
+}
+.typewriter-cursor {
+  display: inline-block;
+  width: 0.5em;
+  background-color: var(--brass);
+  animation: blink 0.8s infinite;
+  vertical-align: baseline;
+  margin-left: 2px;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
 </style>
 </head>
 <body>
@@ -391,7 +407,7 @@
     <div class="wrap hero-inner">
       <p class="hero-eyebrow">Yazıçı, oxucu, tənqidçi</p>
       <div class="hero-name-stack">
-        <p class="hero-name-shadow" id="heroShadow" aria-hidden="true">Nihad</p>
+        <p class="hero-name-shadow" aria-hidden="true">Nihad</p>
         <h1 class="hero-name">Nihad</h1>
       </div>
       <p class="hero-tagline">"Aldadıcı ehtirasların çürütdüyü köhnə insanı üzərinizdən soyunub atın; ruhunuzun dərinliyində yenidən doğulun və Rəbbin öz surətinə görə yaratdığı, həqiqətdə və müqəddəslikdə parlayan, yeni insanı geyinin."</p>
@@ -507,8 +523,42 @@
     </div>
   </footer>
 </main>
-
 <script>
+  /* --- Typewriter Effekti --- */
+async function typeWriterEffect(element, text, speed = 40) {
+  element.style.visibility = 'visible';
+  element.textContent = '';
+  
+  // Kursor yaradırıq
+  const cursor = document.createElement('span');
+  cursor.className = 'typewriter-cursor';
+  cursor.innerHTML = '&nbsp;';
+  element.appendChild(cursor);
+
+  for (let i = 0; i < text.length; i++) {
+    element.insertBefore(document.createTextNode(text.charAt(i)), cursor);
+    await new Promise(resolve => setTimeout(resolve, speed));
+  }
+
+  // Mətn bitdikdən bir müddət sonra kursoru silirik
+  setTimeout(() => {
+    cursor.remove();
+  }, 1000);
+}
+
+// Səhifə yüklənəndə elementləri ardıcıl olaraq işə salırıq
+window.addEventListener('DOMContentLoaded', async () => {
+  const targets = document.querySelectorAll('.typewriter-target');
+  
+  for (let el of targets) {
+    const text = el.getAttribute('data-text');
+    if (text) {
+      await typeWriterEffect(el, text, 35); // Yazılma sürəti (milisaniyə ilə)
+      // Hər mətn blokundan sonra qısa fasilə
+      await new Promise(resolve => setTimeout(resolve, 300));
+    }
+  }
+});
   /* --- Yağış effekti (Canvas) --- */
   const canvas = document.getElementById('rain-canvas');
   const ctx = canvas.getContext('2d');
