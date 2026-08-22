@@ -327,12 +327,12 @@
       <text x="66" y="80" text-anchor="middle" font-family="Noto Serif, serif" font-style="italic" font-weight="500" font-size="46" fill="var(--brass-bright)">N</text>
     </svg>
     <p class="cover-eyebrow">Fəlsəfi alleqoriya</p>
-    <h1 class="cover-title">Dərviş</h1>
-    <p class="cover-byline">Nihad</p>
+    <h1 class="cover-title">Person</h1>
+    <p class="cover-byline">İvan</p>
     <p class="cover-epigraph">&ldquo;In my opinion, a Person should be rational first and radical second. Someone who is only rational is incomplete, while someone who is only radical is worse than a nonhuman.&rdquo;</p>
     <div class="cover-meta">
       <span id="coverPageCount">66 səhifə</span>
-      <span>5 Season</span>
+      <span>5 Fəsil</span>
       <span>İngiliscə</span>
     </div>
     <button class="cover-start" id="startBtn" type="button">
@@ -348,7 +348,7 @@
     <button class="bar-btn" id="tocToggle" type="button" aria-label="Məzmun">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
     </button>
-    <p class="bar-crumb" id="breadcrumb"><b>Dərviş</b></p>
+    <p class="bar-crumb" id="breadcrumb"><b>Person</b></p>
     <div class="font-controls">
       <button class="bar-btn" id="fontDown" type="button" aria-label="Şrifti kiçilt">A&#8722;</button>
       <button class="bar-btn" id="fontUp" type="button" aria-label="Şrifti böyüt">A+</button>
@@ -444,10 +444,10 @@
   function currentLabel(idx){
     var p = PAGES[idx];
     if(p.chapter_title){
-      return 'Season ' + p.chapter_num + ' &middot; ' + escapeHtml(p.chapter_title);
+      return 'Chapter ' + p.chapter_num + ' &middot; ' + escapeHtml(p.chapter_title);
     }
     if(p.season_title){
-      return 'Mövsüm ' + p.season_num + ' &middot; ' + escapeHtml(p.season_title);
+      return 'Season ' + p.season_num + ' &middot; ' + escapeHtml(p.season_title);
     }
     return 'Ön söz';
   }
@@ -458,7 +458,7 @@
     if(p.heading){
       if(p.heading.kind === 'season'){
         html += '<div class="season-title-page">';
-        html += '<p class="eyebrow">Mövsüm ' + p.heading.num + '</p>';
+        html += '<p class="eyebrow">Chapter ' + p.heading.num + '</p>';
         html += '<h1>' + escapeHtml(p.heading.title) + '</h1>';
         html += '<hr class="rule">';
         html += '</div>';
@@ -496,7 +496,7 @@
     function paint(){
       current = idx;
       pageContent.innerHTML = buildPageHTML(idx);
-      breadcrumb.innerHTML = '<b>Dərviş</b> &middot; ' + currentLabel(idx);
+      breadcrumb.innerHTML = '<b>Person</b> &middot; ' + currentLabel(idx);
       pageCounter.textContent = (idx + 1) + ' / ' + total;
       progressFill.style.width = (((idx + 1) / total) * 100) + '%';
       prevBtn.disabled = (idx === 0);
@@ -535,7 +535,7 @@
       a.dataset.page = item.page;
       if(item.kind === 'season'){
         a.className = 'season';
-        a.textContent = 'Mövsüm ' + item.num + ': ' + item.title;
+        a.textContent = 'Chapter ' + item.num + ': ' + item.title;
       } else if(item.kind === 'chapter'){
         a.className = 'chapter';
         a.textContent = 'Season ' + item.num + ': ' + item.title;
