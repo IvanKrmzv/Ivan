@@ -91,7 +91,6 @@
       linear-gradient(180deg, #15110d 0%, #120f0c 40%, #0d0b09 100%);
     background-attachment:fixed;
     position:relative;
-    perspective:1800px;
     transition:background-color 0.5s ease;
   }
   body::before{
@@ -181,7 +180,7 @@
     display:flex; align-items:center; gap:0.4rem;
   }
   .theme-toggle{
-    width:34px; height:34px; flex:none;
+    width:42px; height:42px; flex:none;
     display:flex; align-items:center; justify-content:center;
     background:rgba(18,15,12,0.82);
     border:1px solid rgba(230,167,88,0.4);
@@ -192,15 +191,15 @@
   }
   .theme-toggle:hover{ border-color:var(--candle-bright); transform:translateY(-1px); }
   .theme-toggle:active{ transform:translateY(0); }
-  .theme-toggle svg{ width:15px; height:15px; }
+  .theme-toggle svg{ width:19px; height:19px; }
   .theme-toggle .icon-moon{ display:none; }
   :root[data-theme="day"] .theme-toggle .icon-sun{ display:none; }
   :root[data-theme="day"] .theme-toggle .icon-moon{ display:block; color:var(--candle-bright); }
   .clock-display{
     font-family:var(--sans); font-variant-numeric:tabular-nums;
-    font-size:0.7rem; letter-spacing:0.03em; color:var(--text-onink-dim);
+    font-size:0.82rem; letter-spacing:0.03em; color:var(--text-onink-dim);
     background:rgba(18,15,12,0.72); border:1px solid var(--line);
-    padding:0.4rem 0.6rem; border-radius:20px; backdrop-filter:blur(6px);
+    padding:0.6rem 0.85rem; border-radius:20px; backdrop-filter:blur(6px);
   }
 
   /* Yağış effekti üçün səth */
@@ -220,14 +219,14 @@
     bottom: 22px;
     right: 22px;
     z-index: 1000;
-    display:flex; align-items:center; gap:0.4rem;
+    display:flex; align-items:center; gap:0.5rem;
     background: rgba(18, 15, 12, 0.82);
     border: 1px solid rgba(230,167,88,0.4);
     color: var(--text-onink);
-    padding: 0.5rem 0.75rem 0.5rem 0.6rem;
+    padding: 0.65rem 1rem 0.65rem 0.8rem;
     border-radius: 30px;
     font-family: var(--sans);
-    font-size: 0.72rem;
+    font-size: 0.82rem;
     letter-spacing:0.02em;
     cursor: pointer;
     backdrop-filter: blur(6px);
@@ -238,7 +237,7 @@
     transform:translateY(-1px);
   }
   .rain-toggle:active{ transform:translateY(0); }
-  .rain-toggle svg{ width:14px; height:14px; flex:none; color:var(--verdigris-bright); transition:color 0.25s ease; }
+  .rain-toggle svg{ width:17px; height:17px; flex:none; color:var(--verdigris-bright); transition:color 0.25s ease; }
   .rain-toggle[data-on="true"] svg{ color:var(--candle-bright); }
   .rain-toggle-label{ white-space:nowrap; }
 
@@ -610,8 +609,8 @@
     .book-icon{width:40px; height:40px;}
     .book-head{margin-bottom:0.25rem;}
     .footer-row{justify-content:center; text-align:center;}
-    .rain-toggle{padding:0.5rem 0.6rem;}
-    .clock-display{padding:0.35rem 0.5rem; font-size:0.65rem;}
+    .rain-toggle{padding:0.6rem 0.9rem;}
+    .clock-display{padding:0.5rem 0.7rem; font-size:0.75rem;}
     .utility-dock{bottom:14px; left:14px;}
     .rain-toggle{bottom:14px; right:14px;}
     .quote-carousel{gap:0.5rem;}
