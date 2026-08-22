@@ -7,24 +7,26 @@
 <meta name="description" content="Yazıçının kitabları, haqqında qısa məlumat və dəstək bölməsi.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Noto+Serif:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink-950:#10131a;
-    --ink-900:#161a22;
-    --ink-800:#1c212b;
+    --ink-950:#0c0e13;
+    --ink-900:#13161e;
+    --ink-800:#1a1e28;
     --paper-100:#ede7d8;
-    --paper-50:#f6f2e7;
+    --paper-50:#f8f4e9;
     --text-onink:#e9e5d8;
-    --text-onink-dim:#a7a397;
+    --text-onink-dim:#9d988a;
     --text-onpaper:#201e19;
     --text-onpaper-dim:#5b574c;
     --verdigris:#5f8770;
-    --verdigris-bright:#7fae94;
-    --brass:#b98d4a;
-    --brass-bright:#d3ab6c;
-    --line:rgba(233,229,216,0.12);
-    --line-paper:rgba(32,30,25,0.12);
+    --verdigris-bright:#86b79c;
+    --candle:#c98a3f;
+    --candle-bright:#e6a758;
+    --wax:#8a2f26;
+    --line:rgba(233,229,216,0.10);
+    --line-paper:rgba(32,30,25,0.14);
+    --display:'Fraunces', 'Noto Serif', Georgia, serif;
     --serif:'Noto Serif', Georgia, serif;
     --sans:'Noto Sans', -apple-system, sans-serif;
   }
@@ -41,52 +43,25 @@
     background-image:
       repeating-linear-gradient(90deg, rgba(0,0,0,0.16) 0px, rgba(0,0,0,0.16) 1px, transparent 1px, transparent 96px),
       repeating-linear-gradient(180deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 2px, transparent 2px, transparent 4px),
-      linear-gradient(180deg, #171310 0%, #14110e 40%, #100d0b 100%);
+      linear-gradient(180deg, #15110d 0%, #120f0c 40%, #0d0b09 100%);
     background-attachment:fixed;
+    position:relative;
   }
   body::before{
     content:"";
-    position:fixed; inset:0; z-index:-1; pointer-events:none;
-    opacity:0.05;
+    position:fixed; inset:0; z-index:-2; pointer-events:none;
+    opacity:0.045;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='120' viewBox='0 0 240 120'><g fill='none' stroke='%23e9e5d8' stroke-width='1'><rect x='6' y='10' width='10' height='80'/><rect x='18' y='16' width='8' height='74'/><rect x='30' y='8' width='12' height='82'/><rect x='46' y='14' width='9' height='76'/><rect x='59' y='6' width='11' height='84'/><rect x='74' y='18' width='8' height='72'/><rect x='86' y='10' width='13' height='80'/><rect x='103' y='14' width='9' height='76'/><rect x='116' y='8' width='10' height='82'/><rect x='130' y='16' width='11' height='74'/><rect x='145' y='10' width='9' height='80'/><rect x='158' y='6' width='12' height='84'/><rect x='174' y='14' width='8' height='76'/><rect x='186' y='10' width='10' height='80'/><rect x='200' y='16' width='11' height='74'/><rect x='215' y='8' width='9' height='82'/><line x1='0' y1='96' x2='240' y2='96'/></g></svg>");
     background-repeat:repeat;
     background-size:240px 120px;
   }
-
-  /* Yağış effekti üçün səth */
-  #rain-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 999;
-  }
-
-  /* Yağış səsi idarəetmə düyməsi */
-  .rain-toggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-    background: rgba(20, 17, 14, 0.85);
-    border: 1px solid var(--brass);
-    color: var(--text-onink);
-    padding: 10px 16px;
-    border-radius: 30px;
-    font-family: var(--sans);
-    font-size: 0.82rem;
-    cursor: pointer;
-    backdrop-filter: blur(5px);
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .rain-toggle:hover {
-    background: var(--brass);
-    color: var(--ink-950);
+  /* Ambient candle glow — a warm off-screen light source the whole page sits in */
+  body::after{
+    content:"";
+    position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background:
+      radial-gradient(ellipse 900px 700px at 12% -6%, rgba(230,167,88,0.10), transparent 60%),
+      radial-gradient(ellipse 700px 600px at 100% 8%, rgba(95,135,112,0.07), transparent 55%);
   }
 
   a{color:inherit;}
@@ -94,14 +69,14 @@
 
   .skip-link{
     position:absolute; left:-999px; top:0;
-    background:var(--brass); color:var(--ink-950);
+    background:var(--candle-bright); color:var(--ink-950);
     padding:0.75rem 1.25rem; font-family:var(--sans); font-weight:600;
-    z-index:100;
+    z-index:200;
   }
   .skip-link:focus{left:1rem; top:1rem;}
 
   a:focus-visible, button:focus-visible{
-    outline:2px solid var(--brass-bright);
+    outline:2px solid var(--candle-bright);
     outline-offset:3px;
   }
 
@@ -111,10 +86,70 @@
     padding:0 clamp(1.25rem, 4vw, 3rem);
   }
 
+  /* ---------- Reading-progress ribbon ---------- */
+  /* A bookmark ribbon that unspools down the page as you read it */
+  .progress-ribbon{
+    position:fixed; top:0; right:16px;
+    width:9px; height:100vh;
+    z-index:998; pointer-events:none;
+  }
+  .progress-ribbon::before{
+    content:"";
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    background:rgba(233,229,216,0.05);
+  }
+  .progress-ribbon-fill{
+    position:absolute; top:0; left:0; width:100%; height:0%;
+    min-height:0px;
+    background:linear-gradient(180deg, var(--candle-bright), var(--candle) 88%, var(--wax));
+    box-shadow:0 0 14px rgba(230,167,88,0.4);
+    clip-path:polygon(0 0, 100% 0, 100% calc(100% - 9px), 50% 100%, 0 calc(100% - 9px));
+  }
+  @media (max-width:640px){ .progress-ribbon{display:none;} }
+
+  /* Yağış effekti üçün səth */
+  #rain-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  /* Yağış səsi idarəetmə düyməsi */
+  .rain-toggle {
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    z-index: 1000;
+    display:flex; align-items:center; gap:0.6rem;
+    background: rgba(18, 15, 12, 0.82);
+    border: 1px solid rgba(230,167,88,0.4);
+    color: var(--text-onink);
+    padding: 0.65rem 1.1rem 0.65rem 0.75rem;
+    border-radius: 30px;
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    letter-spacing:0.02em;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.15s ease;
+  }
+  .rain-toggle:hover {
+    border-color: var(--candle-bright);
+    transform:translateY(-1px);
+  }
+  .rain-toggle:active{ transform:translateY(0); }
+  .rain-toggle svg{ width:16px; height:16px; flex:none; color:var(--verdigris-bright); transition:color 0.25s ease; }
+  .rain-toggle[data-on="true"] svg{ color:var(--candle-bright); }
+  .rain-toggle-label{ white-space:nowrap; }
+
   /* ---------- Top nav ---------- */
   .topnav{
     position:sticky; top:0; z-index:20;
-    background:rgba(20,17,14,0.88);
+    background:rgba(18,15,12,0.86);
     backdrop-filter:blur(8px);
     border-bottom:1px solid var(--line);
   }
@@ -125,8 +160,8 @@
     max-width:1120px; margin:0 auto;
   }
   .brand-mini{
-    font-family:var(--sans); font-weight:600; font-size:0.95rem;
-    letter-spacing:0.04em; text-decoration:none; color:var(--text-onink);
+    font-family:var(--display); font-weight:600; font-size:1.05rem;
+    letter-spacing:0.06em; text-decoration:none; color:var(--text-onink);
     flex:none;
   }
   .nav-links{
@@ -138,19 +173,30 @@
     text-decoration:none; color:var(--text-onink-dim);
     letter-spacing:0.02em; transition:color 0.2s ease;
     white-space:nowrap;
+    position:relative;
+    padding-bottom:2px;
   }
-  .nav-links a:hover{color:var(--brass-bright);}
+  .nav-links a::after{
+    content:""; position:absolute; left:0; bottom:-2px; width:0; height:1px;
+    background:var(--candle-bright); transition:width 0.25s ease;
+  }
+  .nav-links a:hover{color:var(--text-onink);}
+  .nav-links a:hover::after{width:100%;}
 
   /* ---------- Hero ---------- */
   .hero{
     position:relative;
-    padding:clamp(4rem,14vw,9rem) 0 clamp(3rem,10vw,6rem);
+    padding:clamp(4.5rem,15vw,10rem) 0 clamp(3.5rem,10vw,6.5rem);
     overflow:hidden;
   }
   .hero-inner{position:relative; z-index:1;}
   .hero-eyebrow{
-    font-family:var(--sans); font-size:0.8rem; letter-spacing:0.14em;
+    font-family:var(--sans); font-size:0.8rem; letter-spacing:0.16em;
     text-transform:uppercase; color:var(--verdigris-bright); margin:0 0 1.5rem;
+    display:flex; align-items:center; gap:0.65em;
+  }
+  .hero-eyebrow::before{
+    content:""; width:26px; height:1px; background:var(--verdigris-bright); opacity:0.6;
   }
   .hero-name-stack{
     position:relative;
@@ -158,17 +204,18 @@
     max-width:100%;
   }
   .hero-name{
-    font-family:var(--serif); font-weight:700;
-    font-size:clamp(2.6rem, 8vw, 5.2rem);
-    line-height:1.02; margin:0; color:var(--text-onink);
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(2.8rem, 9vw, 5.6rem);
+    line-height:0.98; margin:0; color:var(--text-onink);
     position:relative; z-index:2;
+    letter-spacing:-0.01em;
   }
   .hero-name-shadow{
-    position:absolute; top:0.14em; left:0.09em;
-    font-family:var(--serif); font-style:italic; font-weight:500;
-    font-size:clamp(2.6rem, 8vw, 5.2rem);
-    line-height:1.02; margin:0; color:var(--brass);
-    opacity:0.4; z-index:1; user-select:none; pointer-events:none;
+    position:absolute; top:0.15em; left:0.1em;
+    font-family:var(--display); font-style:italic; font-weight:500;
+    font-size:clamp(2.8rem, 9vw, 5.6rem);
+    line-height:0.98; margin:0; color:var(--candle);
+    opacity:0.38; z-index:1; user-select:none; pointer-events:none;
     transition:transform 0.4s ease-out;
     will-change:transform;
   }
@@ -176,14 +223,25 @@
     font-family:var(--serif); font-style:italic; font-weight:400;
     font-size:clamp(1.02rem, 2.2vw, 1.35rem);
     color:var(--text-onink-dim);
-    max-width:32em; margin:1.75rem 0 0;
+    max-width:34em; margin:1.85rem 0 0;
   }
+  /* Hand-drawn ink flourish beneath the tagline */
+  .ink-flourish{
+    width:min(220px, 40vw); height:22px; margin-top:1.5rem;
+    color:var(--candle-bright); opacity:0.85;
+  }
+  .ink-flourish path{
+    fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round;
+    stroke-dasharray:340; stroke-dashoffset:340;
+    animation:draw-flourish 1.6s 0.5s cubic-bezier(0.65,0,0.35,1) forwards;
+  }
+  @keyframes draw-flourish{ to{ stroke-dashoffset:0; } }
 
   /* ---------- Section shells ---------- */
   section{padding:clamp(3rem,8vw,5.5rem) 0;}
   .section-eyebrow{
-    font-family:var(--sans); font-size:0.78rem; letter-spacing:0.14em;
-    text-transform:uppercase; color:var(--verdigris-bright); margin:0 0 0.75rem;
+    font-family:var(--sans); font-weight:600; font-size:0.82rem; letter-spacing:0.06em;
+    color:var(--verdigris-bright); margin:0 0 0.75rem;
   }
   .section-title{
     font-family:var(--serif); font-weight:700;
@@ -197,14 +255,40 @@
   .reveal.is-visible{opacity:1; transform:translateY(0);}
 
   /* ---------- About ---------- */
-  .about{border-top:1px solid var(--line);}
-  .about-grid{
-    display:grid; grid-template-columns:auto 1fr; gap:clamp(1.5rem,5vw,4rem);
-    align-items:center;
+  .about{border-top:1px solid var(--line); position:relative;}
+  .about::before{
+    content:"";
+    position:absolute; top:10%; left:6%; width:280px; height:280px;
+    background:radial-gradient(circle, rgba(230,167,88,0.10), transparent 68%);
+    pointer-events:none;
   }
-  .seal{width:132px; height:132px; flex:none;}
+  .about-grid{
+    display:grid; grid-template-columns:auto 1fr; gap:clamp(1.5rem,5vw,4.5rem);
+    align-items:center; position:relative;
+  }
+  .seal-wrap{position:relative; flex:none; width:132px; height:132px;}
+  .seal-wrap::before{
+    content:"";
+    position:absolute; inset:-14px; border-radius:50%;
+    background:radial-gradient(circle, rgba(230,167,88,0.22), transparent 70%);
+    opacity:0; transition:opacity 0.5s ease;
+  }
+  .seal-wrap:hover::before{opacity:1;}
+  .seal{width:132px; height:132px; transition:transform 0.5s ease;}
+  .seal-wrap:hover .seal{transform:rotate(8deg);}
+  .about-title-row{
+    display:flex; align-items:center; gap:1rem; margin-bottom:2rem;
+  }
+  .about-rule{
+    flex:1 1 auto; height:1px; max-width:120px;
+    background:linear-gradient(90deg, var(--candle), transparent);
+    opacity:0.55;
+  }
+  .about-text .section-title{margin:0;}
   .about-text p{
-    font-size:1.05rem; color:var(--text-onink-dim); max-width:38em; margin:0;
+    font-size:1.1rem; font-style:italic; color:var(--text-onink-dim);
+    max-width:38em; margin:0; padding-left:1.1rem;
+    border-left:2px solid var(--verdigris); line-height:1.75;
   }
 
   /* ---------- Books + support grid ---------- */
@@ -219,25 +303,36 @@
   .book-list{display:flex; flex-direction:column; gap:1.25rem;}
   .book-card{
     display:grid; grid-template-columns:56px 1fr; gap:1.1rem;
-    background:linear-gradient(180deg, #1d1712 0%, #191410 100%);
+    background:linear-gradient(180deg, #1c1712 0%, #181310 100%);
     border:1px solid var(--line);
-    border-radius:10px; padding:1.35rem;
-    transition:border-color 0.25s ease, transform 0.25s ease;
+    border-left:2px solid var(--verdigris);
+    border-radius:4px 10px 10px 4px; padding:1.35rem;
+    transition:border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
   }
-  .book-card:hover{border-color:var(--verdigris); transform:translateY(-2px);}
+  .book-card:hover{
+    border-color:var(--line); border-left-color:var(--candle-bright);
+    transform:translateY(-2px) translateX(2px);
+    box-shadow:0 12px 28px -14px rgba(0,0,0,0.6);
+  }
   .book-icon{width:56px; height:56px; color:var(--verdigris-bright);}
   .book-head{
     display:flex; align-items:baseline; justify-content:space-between;
     gap:0.75rem; flex-wrap:wrap; margin-bottom:0.35rem;
   }
   .book-title{
-    font-family:var(--serif); font-weight:700; font-size:1.2rem; margin:0;
+    font-family:var(--display); font-weight:600; font-size:1.28rem; margin:0;
   }
   .book-status{
-    font-family:var(--sans); font-size:0.68rem; letter-spacing:0.08em;
-    text-transform:uppercase; color:var(--brass-bright);
-    border:1px solid var(--brass); border-radius:999px;
-    padding:0.2rem 0.65rem; white-space:nowrap;
+    font-family:var(--sans); font-size:0.64rem; letter-spacing:0.09em;
+    text-transform:uppercase; color:var(--candle-bright);
+    border:1px solid var(--candle); border-radius:999px;
+    padding:0.22rem 0.7rem; white-space:nowrap;
+    transform:rotate(-2deg);
+    position:relative;
+  }
+  .book-status::before{
+    content:""; position:absolute; inset:2px;
+    border:1px solid var(--candle); border-radius:999px; opacity:0.35;
   }
   .language{
     font-family:var(--sans); font-size:0.72rem; letter-spacing:0.06em;
@@ -246,33 +341,42 @@
   }
   .language::before{
     content:""; width:5px; height:5px; border-radius:50%;
-    background:var(--brass); display:inline-block; flex:none;
+    background:var(--candle); display:inline-block; flex:none;
   }
   .book-genre{
-    font-family:var(--sans); font-size:0.78rem; letter-spacing:0.04em;
+    font-family:var(--sans); font-style:italic; font-size:0.78rem; letter-spacing:0.02em;
     color:var(--verdigris-bright); margin:0 0 0.6rem;
   }
   .book-desc{
-    font-size:0.96rem; color:var(--text-onink-dim); margin:0 0 0.9rem;
+    font-size:0.97rem; color:var(--text-onink-dim); margin:0 0 0.9rem;
   }
   .book-link{
     font-family:var(--sans); font-size:0.85rem; font-weight:600;
     text-decoration:none; color:var(--text-onink);
-    border-bottom:1px solid var(--brass); padding-bottom:2px;
-    display:inline-block;
+    border-bottom:1px solid var(--candle); padding-bottom:2px;
+    display:inline-block; transition:color 0.2s ease, border-color 0.2s ease;
   }
-  .book-link:hover{color:var(--brass-bright);}
+  .book-link:hover{color:var(--candle-bright); border-color:var(--candle-bright);}
 
   /* ---------- Support sidebar ---------- */
   .support-col{padding-top:clamp(3rem,8vw,5.5rem);}
   .support-box{
     position:sticky; top:5.5rem;
     background:var(--paper-100); color:var(--text-onpaper);
-    border-radius:12px; padding:1.75rem;
+    border-radius:2px 2px 12px 12px; padding:2rem 1.75rem 1.75rem;
+    box-shadow:0 24px 48px -24px rgba(0,0,0,0.55);
+    position:relative;
+  }
+  /* torn-paper top edge, like a note pulled from a letterhead pad */
+  .support-box::before{
+    content:"";
+    position:absolute; top:-1px; left:0; right:0; height:10px;
+    background:var(--paper-100);
+    clip-path:polygon(0% 100%,3% 30%,7% 90%,11% 20%,15% 80%,19% 10%,23% 70%,27% 25%,31% 95%,35% 15%,39% 75%,43% 30%,47% 90%,51% 10%,55% 70%,59% 25%,63% 85%,67% 15%,71% 70%,75% 30%,79% 90%,83% 10%,87% 75%,91% 20%,95% 85%,100% 100%);
   }
   .support-box .section-eyebrow{color:#3f6b52;}
   .support-title{
-    font-family:var(--serif); font-weight:700; font-size:1.35rem; margin:0 0 0.75rem;
+    font-family:var(--display); font-weight:600; font-size:1.4rem; margin:0 0 0.75rem;
     color:var(--text-onpaper);
   }
   .support-text{
@@ -286,14 +390,15 @@
     padding:0.85rem 1rem; border-radius:8px;
     border:1px solid var(--line-paper);
     color:var(--text-onpaper); background:var(--paper-50);
-    transition:background 0.2s ease, border-color 0.2s ease;
+    transition:background 0.2s ease, border-color 0.2s ease, transform 0.12s ease;
     min-height:44px;
   }
-  .support-btn:hover{border-color:var(--brass); background:#fff;}
+  .support-btn:hover{border-color:var(--candle); background:#fff;}
+  .support-btn:active{transform:scale(0.98);}
   .support-btn.primary{
-    background:var(--brass); border-color:var(--brass); color:#241a08;
+    background:var(--candle); border-color:var(--candle); color:#241a08;
   }
-  .support-btn.primary:hover{background:var(--brass-bright);}
+  .support-btn.primary:hover{background:var(--candle-bright);}
   .support-card-number{
     font-family:var(--sans); font-size:0.85rem; letter-spacing:0.04em;
     background:var(--paper-50); border:1px dashed var(--line-paper);
@@ -306,12 +411,12 @@
   }
   .support-card-number button{
     font-family:var(--sans); font-size:0.75rem; font-weight:600;
-    border:none; background:none; color:var(--brass); cursor:pointer;
+    border:none; background:none; color:var(--candle); cursor:pointer;
     padding:0.4rem 0.5rem; flex:none; min-height:32px;
   }
   .support-card-number button:hover{color:#8a6329;}
   .support-note{
-    font-family:var(--sans); font-size:0.78rem; color:var(--text-onpaper-dim);
+    font-family:var(--serif); font-style:italic; font-size:0.85rem; color:var(--text-onpaper-dim);
     margin:1.25rem 0 0; line-height:1.5;
   }
 
@@ -331,7 +436,7 @@
     flex-wrap:wrap; justify-content:center;
   }
   .footer-links a{text-decoration:none; color:var(--text-onink-dim);}
-  .footer-links a:hover{color:var(--brass-bright);}
+  .footer-links a:hover{color:var(--candle-bright);}
 
   /* ---------- Responsive ---------- */
   @media (max-width:900px){
@@ -339,7 +444,10 @@
     .support-col{padding-top:0;}
     .support-box{position:static;}
     .about-grid{grid-template-columns:1fr; text-align:center;}
-    .about-grid .seal{margin:0 auto;}
+    .about-grid .seal-wrap{margin:0 auto;}
+    .about-title-row{justify-content:center;}
+    .about-rule{display:none;}
+    .about-text p{border-left:none; padding-left:0;}
     .language{justify-content:center;}
   }
 
@@ -354,24 +462,37 @@
     .book-icon{width:40px; height:40px;}
     .book-head{margin-bottom:0.25rem;}
     .footer-row{justify-content:center; text-align:center;}
+    .rain-toggle-label{display:none;}
+    .rain-toggle{padding:0.65rem;}
   }
 
   @media (max-width:400px){
-    .brand-mini{font-size:0.85rem;}
+    .brand-mini{font-size:0.9rem;}
     .nav-links{gap:0.65rem; font-size:0.74rem;}
-    .support-box{padding:1.4rem;}
+    .support-box{padding:1.6rem 1.4rem 1.4rem;}
   }
 
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto;}
     .reveal{opacity:1; transform:none; transition:none;}
     .hero-name-shadow{transition:none;}
+    .ink-flourish path{animation:none; stroke-dashoffset:0;}
   }
 </style>
 </head>
 <body>
 <canvas id="rain-canvas"></canvas>
-<button class="rain-toggle" id="rainToggleBtn" type="button">🌧️ Yağış Səsi: Bağlı</button>
+
+<div class="progress-ribbon" aria-hidden="true">
+  <div class="progress-ribbon-fill" id="progressFill"></div>
+</div>
+
+<button class="rain-toggle" id="rainToggleBtn" type="button" data-on="false" aria-pressed="false">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M12 3C12 3 6.5 10.2 6.5 14.2C6.5 17.4 8.9 20 12 20C15.1 20 17.5 17.4 17.5 14.2C17.5 10.2 12 3 12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+  </svg>
+  <span class="rain-toggle-label" id="rainToggleLabel">Yağış səsi</span>
+</button>
 
 <a class="skip-link" href="#main">Əsas məzmuna keç</a>
 
@@ -395,18 +516,26 @@
         <h1 class="hero-name">Nihad</h1>
       </div>
       <p class="hero-tagline">"Aldadıcı ehtirasların çürütdüyü köhnə insanı üzərinizdən soyunub atın; ruhunuzun dərinliyində yenidən doğulun və Rəbbin öz surətinə görə yaratdığı, həqiqətdə və müqəddəslikdə parlayan, yeni insanı geyinin."</p>
+      <svg class="ink-flourish" viewBox="0 0 220 22" aria-hidden="true">
+        <path d="M2 14 C 30 4, 55 20, 85 10 S 140 2, 165 14 S 205 20, 218 8"/>
+      </svg>
     </div>
   </header>
 
   <section class="about" id="about">
     <div class="wrap about-grid reveal">
-      <svg class="seal" viewBox="0 0 132 132" role="img" aria-label="Müəllif möhürü">
-        <circle cx="66" cy="66" r="63" fill="none" stroke="var(--brass)" stroke-width="1.2"/>
-        <circle cx="66" cy="66" r="54" fill="none" stroke="var(--brass)" stroke-width="1.2" opacity="0.55"/>
-        <text x="66" y="80" text-anchor="middle" font-family="Noto Serif, serif" font-style="italic" font-weight="500" font-size="46" fill="var(--brass-bright)">N</text>
-      </svg>
+      <div class="seal-wrap">
+        <svg class="seal" viewBox="0 0 132 132" role="img" aria-label="Müəllif möhürü">
+          <circle cx="66" cy="66" r="63" fill="none" stroke="var(--candle)" stroke-width="1.2"/>
+          <circle cx="66" cy="66" r="54" fill="none" stroke="var(--candle)" stroke-width="1.2" opacity="0.55"/>
+          <text x="66" y="80" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-weight="500" font-size="46" fill="var(--candle-bright)">N</text>
+        </svg>
+      </div>
       <div class="about-text">
-        <p class="section-eyebrow">Haqqımda</p>
+        <div class="about-title-row">
+          <p class="section-eyebrow" style="margin:0;">Haqqımda</p>
+          <span class="about-rule" aria-hidden="true"></span>
+        </div>
         <h2 class="section-title">Qaranlıqda görsənməyən aydınlıq.</h2>
         <p>Dostoyevskidən bəhrələnmiş, son quruşunu ucuz rus arağında itirən dövrümüzün kefli İsgəndəri.</p>
       </div>
@@ -535,7 +664,7 @@
 
   function animateRain() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = 'rgba(127, 174, 148, 0.4)';
+    ctx.strokeStyle = 'rgba(134, 183, 156, 0.38)';
     ctx.lineWidth = 1;
     ctx.lineCap = 'round';
 
@@ -566,21 +695,19 @@
 
   function toggleRainSound() {
     const btn = document.getElementById('rainToggleBtn');
-    
+    const label = document.getElementById('rainToggleLabel');
+
     if (!isPlaying) {
-      // Audio kontekstini başladırıq
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      
-      // Səs səviyyəsini tənzimləmək üçün GainNode
+
       gainNode = audioCtx.createGain();
-      gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime); // Rahatladıcı fon səviyyəsi
+      gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
       gainNode.connect(audioCtx.destination);
 
-      // Təbii yağış səsi üçün White/Pink Noise yaratmaq
       const bufferSize = 2 * audioCtx.sampleRate;
       const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
       const output = noiseBuffer.getChannelData(0);
-      
+
       for (let i = 0; i < bufferSize; i++) {
         output[i] = Math.random() * 2 - 1;
       }
@@ -589,7 +716,6 @@
       noiseNode.buffer = noiseBuffer;
       noiseNode.loop = true;
 
-      // Yağış səsinə bənzətmək üçün yüksək tezlikləri filtrdən keçiririk (Lowpass Filter)
       const filter = audioCtx.createBiquadFilter();
       filter.type = 'lowpass';
       filter.frequency.setValueAtTime(800, audioCtx.currentTime);
@@ -599,7 +725,9 @@
       noiseNode.start();
 
       isPlaying = true;
-      btn.textContent = '🌧️ Yağış Səsi: Açıq';
+      btn.dataset.on = "true";
+      btn.setAttribute('aria-pressed', 'true');
+      label.textContent = 'Yağış səsi: açıq';
     } else {
       if (noiseNode) {
         noiseNode.stop();
@@ -609,11 +737,25 @@
         audioCtx.close();
       }
       isPlaying = false;
-      btn.textContent = '🌧️ Yağış Səsi: Bağlı';
+      btn.dataset.on = "false";
+      btn.setAttribute('aria-pressed', 'false');
+      label.textContent = 'Yağış səsi';
     }
   }
 
   document.getElementById('rainToggleBtn').addEventListener('click', toggleRainSound);
+
+  /* --- Oxuma zolağı (scroll progress ribbon) --- */
+  const progressFill = document.getElementById('progressFill');
+  function updateProgress() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) : 0;
+    progressFill.style.height = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
 
   /* --- Mövcud interaktiv skriptlər --- */
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
