@@ -29,6 +29,51 @@
     --display:'Fraunces', 'Noto Serif', Georgia, serif;
     --serif:'Noto Serif', Georgia, serif;
     --sans:'Noto Sans', -apple-system, sans-serif;
+    --rain-color-rgb:134,183,156;
+    --spine-shift:0px;
+  }
+
+  /* ---------- Gündüz rejimi ---------- */
+  :root[data-theme="day"]{
+    --ink-950:#f3ede0;
+    --ink-900:#ece3d0;
+    --ink-800:#e3d9c3;
+    --text-onink:#241f18;
+    --text-onink-dim:#655e4d;
+    --verdigris:#3f6b52;
+    --verdigris-bright:#2f5640;
+    --candle:#a8692a;
+    --candle-bright:#8f5722;
+    --line:rgba(32,30,25,0.13);
+    --rain-color-rgb:63,107,82;
+  }
+  :root[data-theme="day"] body{
+    background-image:
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0px, rgba(0,0,0,0.05) 1px, transparent 1px, transparent 96px),
+      repeating-linear-gradient(180deg, rgba(0,0,0,0.012) 0px, rgba(0,0,0,0.012) 2px, transparent 2px, transparent 4px),
+      linear-gradient(180deg, #f6f0e3 0%, #f2ebdc 45%, #ece2cd 100%);
+  }
+  :root[data-theme="day"] body::before{
+    opacity:0.05;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='120' viewBox='0 0 240 120'><g fill='none' stroke='%23201e19' stroke-width='1'><rect x='6' y='10' width='10' height='80'/><rect x='18' y='16' width='8' height='74'/><rect x='30' y='8' width='12' height='82'/><rect x='46' y='14' width='9' height='76'/><rect x='59' y='6' width='11' height='84'/><rect x='74' y='18' width='8' height='72'/><rect x='86' y='10' width='13' height='80'/><rect x='103' y='14' width='9' height='76'/><rect x='116' y='8' width='10' height='82'/><rect x='130' y='16' width='11' height='74'/><rect x='145' y='10' width='9' height='80'/><rect x='158' y='6' width='12' height='84'/><rect x='174' y='14' width='8' height='76'/><rect x='186' y='10' width='10' height='80'/><rect x='200' y='16' width='11' height='74'/><rect x='215' y='8' width='9' height='82'/><line x1='0' y1='96' x2='240' y2='96'/></g></svg>");
+  }
+  :root[data-theme="day"] body::after{
+    background:
+      radial-gradient(ellipse 900px 700px at 12% -6%, rgba(168,105,42,0.10), transparent 60%),
+      radial-gradient(ellipse 700px 600px at 100% 8%, rgba(63,107,82,0.08), transparent 55%);
+  }
+
+  /* Gecə saatlarında (00:00–05:00) əlavə dərinləşən vinyet */
+  body.late-night::after{
+    background:
+      radial-gradient(ellipse 900px 700px at 12% -6%, rgba(230,167,88,0.15), transparent 55%),
+      radial-gradient(ellipse 700px 600px at 100% 8%, rgba(95,135,112,0.10), transparent 50%);
+  }
+  body.late-night{ filter:brightness(0.97); }
+
+  .visually-hidden{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
   }
 
   *{box-sizing:border-box;}
@@ -46,6 +91,8 @@
       linear-gradient(180deg, #15110d 0%, #120f0c 40%, #0d0b09 100%);
     background-attachment:fixed;
     position:relative;
+    perspective:1800px;
+    transition:background-color 0.5s ease;
   }
   body::before{
     content:"";
@@ -54,6 +101,7 @@
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='120' viewBox='0 0 240 120'><g fill='none' stroke='%23e9e5d8' stroke-width='1'><rect x='6' y='10' width='10' height='80'/><rect x='18' y='16' width='8' height='74'/><rect x='30' y='8' width='12' height='82'/><rect x='46' y='14' width='9' height='76'/><rect x='59' y='6' width='11' height='84'/><rect x='74' y='18' width='8' height='72'/><rect x='86' y='10' width='13' height='80'/><rect x='103' y='14' width='9' height='76'/><rect x='116' y='8' width='10' height='82'/><rect x='130' y='16' width='11' height='74'/><rect x='145' y='10' width='9' height='80'/><rect x='158' y='6' width='12' height='84'/><rect x='174' y='14' width='8' height='76'/><rect x='186' y='10' width='10' height='80'/><rect x='200' y='16' width='11' height='74'/><rect x='215' y='8' width='9' height='82'/><line x1='0' y1='96' x2='240' y2='96'/></g></svg>");
     background-repeat:repeat;
     background-size:240px 120px;
+    background-position:var(--spine-shift) 0;
   }
   /* Ambient candle glow — a warm off-screen light source the whole page sits in */
   body::after{
@@ -107,6 +155,54 @@
   }
   @media (max-width:640px){ .progress-ribbon{display:none;} }
 
+  /* ---------- Uzaq ildırım çaxması ---------- */
+  .lightning-flash{
+    position:fixed; inset:0; z-index:900; pointer-events:none;
+    background:radial-gradient(ellipse at 28% 8%, rgba(214,226,255,0.55), rgba(214,226,255,0) 62%);
+    opacity:0;
+  }
+  .lightning-flash.flash-active{ animation:flash-pulse 0.28s ease-out; }
+  @keyframes flash-pulse{ 0%{opacity:0;} 18%{opacity:1;} 100%{opacity:0;} }
+  @media (prefers-reduced-motion:reduce){ .lightning-flash{ display:none; } }
+
+  /* ---------- Kursor mürəkkəb izi ---------- */
+  .ink-trail-layer{ position:fixed; inset:0; z-index:40; pointer-events:none; }
+  .ink-blot{
+    position:absolute; border-radius:50%;
+    background:radial-gradient(circle, rgba(95,135,112,0.55), rgba(95,135,112,0) 72%);
+    opacity:0.85;
+    transition:opacity 0.75s ease, transform 0.75s ease;
+  }
+  .ink-blot.ink-blot-fade{ opacity:0; transform:scale(1.7); }
+
+  /* ---------- Alt-sol xidmət paneli: saat + rejim düyməsi ---------- */
+  .utility-dock{
+    position:fixed; bottom:22px; left:22px; z-index:1000;
+    display:flex; align-items:center; gap:0.4rem;
+  }
+  .theme-toggle{
+    width:34px; height:34px; flex:none;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(18,15,12,0.82);
+    border:1px solid rgba(230,167,88,0.4);
+    border-radius:50%; cursor:pointer;
+    color:var(--verdigris-bright);
+    backdrop-filter:blur(6px);
+    transition:border-color 0.25s ease, transform 0.15s ease, color 0.25s ease;
+  }
+  .theme-toggle:hover{ border-color:var(--candle-bright); transform:translateY(-1px); }
+  .theme-toggle:active{ transform:translateY(0); }
+  .theme-toggle svg{ width:15px; height:15px; }
+  .theme-toggle .icon-moon{ display:none; }
+  :root[data-theme="day"] .theme-toggle .icon-sun{ display:none; }
+  :root[data-theme="day"] .theme-toggle .icon-moon{ display:block; color:var(--candle-bright); }
+  .clock-display{
+    font-family:var(--sans); font-variant-numeric:tabular-nums;
+    font-size:0.7rem; letter-spacing:0.03em; color:var(--text-onink-dim);
+    background:rgba(18,15,12,0.72); border:1px solid var(--line);
+    padding:0.4rem 0.6rem; border-radius:20px; backdrop-filter:blur(6px);
+  }
+
   /* Yağış effekti üçün səth */
   #rain-canvas {
     position: fixed;
@@ -124,14 +220,14 @@
     bottom: 22px;
     right: 22px;
     z-index: 1000;
-    display:flex; align-items:center; gap:0.6rem;
+    display:flex; align-items:center; gap:0.4rem;
     background: rgba(18, 15, 12, 0.82);
     border: 1px solid rgba(230,167,88,0.4);
     color: var(--text-onink);
-    padding: 0.65rem 1.1rem 0.65rem 0.75rem;
+    padding: 0.5rem 0.75rem 0.5rem 0.6rem;
     border-radius: 30px;
     font-family: var(--sans);
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     letter-spacing:0.02em;
     cursor: pointer;
     backdrop-filter: blur(6px);
@@ -142,7 +238,7 @@
     transform:translateY(-1px);
   }
   .rain-toggle:active{ transform:translateY(0); }
-  .rain-toggle svg{ width:16px; height:16px; flex:none; color:var(--verdigris-bright); transition:color 0.25s ease; }
+  .rain-toggle svg{ width:14px; height:14px; flex:none; color:var(--verdigris-bright); transition:color 0.25s ease; }
   .rain-toggle[data-on="true"] svg{ color:var(--candle-bright); }
   .rain-toggle-label{ white-space:nowrap; }
 
@@ -219,6 +315,20 @@
     transition:transform 0.4s ease-out;
     will-change:transform;
   }
+  /* Ad, alov tutan kimi hərf-hərf işıqlanır */
+  .flame-letter{
+    display:inline-block;
+    opacity:0;
+    filter:blur(6px);
+    text-shadow:0 0 22px var(--candle-bright), 0 0 6px var(--candle-bright);
+    animation:catch-flame 0.6s ease forwards;
+  }
+  .flame-letter.is-space{width:0.32em;}
+  @keyframes catch-flame{
+    0%{ opacity:0; filter:blur(8px); text-shadow:0 0 26px var(--candle-bright), 0 0 8px var(--candle-bright); transform:translateY(5px); }
+    55%{ opacity:1; filter:blur(0); text-shadow:0 0 24px var(--candle-bright); }
+    100%{ opacity:1; filter:blur(0); text-shadow:0 0 0 transparent; transform:translateY(0); }
+  }
   .hero-tagline{
     font-family:var(--serif); font-style:italic; font-weight:400;
     font-size:clamp(1.02rem, 2.2vw, 1.35rem);
@@ -289,6 +399,44 @@
     font-size:1.1rem; font-style:italic; color:var(--text-onink-dim);
     max-width:38em; margin:0; padding-left:1.1rem;
     border-left:2px solid var(--verdigris); line-height:1.75;
+  }
+
+  /* ---------- Sitatlar arxivi ---------- */
+  .quotes{ border-top:1px solid var(--line); text-align:center; }
+  .quotes-inner{ display:flex; flex-direction:column; align-items:center; }
+  .quote-carousel{
+    display:flex; align-items:center; justify-content:center; gap:clamp(0.75rem,3vw,2rem);
+    width:100%; max-width:44em; margin:1.5rem auto 0;
+  }
+  .quote-slide{
+    margin:0; flex:1 1 auto;
+    font-family:var(--display); font-style:italic; font-weight:500;
+    font-size:clamp(1.15rem, 2.6vw, 1.55rem);
+    line-height:1.55; color:var(--text-onink);
+    min-height:3.6em; display:flex; align-items:center; justify-content:center;
+    opacity:0; transform:translateY(6px);
+  }
+  .quote-slide.quote-in{
+    animation:quote-fade-in 0.6s ease forwards;
+  }
+  @keyframes quote-fade-in{ to{ opacity:1; transform:translateY(0); } }
+  .quote-nav{
+    flex:none; width:38px; height:38px; border-radius:50%;
+    background:transparent; border:1px solid var(--line);
+    color:var(--candle-bright); font-family:var(--serif); font-size:1.3rem;
+    cursor:pointer; line-height:1;
+    transition:border-color 0.2s ease, background 0.2s ease;
+  }
+  .quote-nav:hover{ border-color:var(--candle); background:rgba(230,167,88,0.08); }
+  .quote-dots{ display:flex; gap:0.5rem; margin-top:1.75rem; }
+  .quote-dot{
+    width:7px; height:7px; border-radius:50%; padding:0; border:none;
+    background:var(--line); cursor:pointer;
+    transition:background 0.25s ease, transform 0.25s ease;
+  }
+  .quote-dot.active{ background:var(--candle-bright); transform:scale(1.3); }
+  @media (prefers-reduced-motion:reduce){
+    .quote-slide{ animation:none !important; opacity:1; transform:none; }
   }
 
   /* ---------- Books + support grid ---------- */
@@ -462,8 +610,12 @@
     .book-icon{width:40px; height:40px;}
     .book-head{margin-bottom:0.25rem;}
     .footer-row{justify-content:center; text-align:center;}
-    .rain-toggle-label{display:none;}
-    .rain-toggle{padding:0.65rem;}
+    .rain-toggle{padding:0.5rem 0.6rem;}
+    .clock-display{padding:0.35rem 0.5rem; font-size:0.65rem;}
+    .utility-dock{bottom:14px; left:14px;}
+    .rain-toggle{bottom:14px; right:14px;}
+    .quote-carousel{gap:0.5rem;}
+    .quote-nav{width:32px; height:32px;}
   }
 
   @media (max-width:400px){
@@ -477,21 +629,36 @@
     .reveal{opacity:1; transform:none; transition:none;}
     .hero-name-shadow{transition:none;}
     .ink-flourish path{animation:none; stroke-dashoffset:0;}
+    .flame-letter{animation:none !important; opacity:1 !important; filter:none !important; text-shadow:none !important;}
   }
 </style>
 </head>
 <body>
+<div class="lightning-flash" id="lightningFlash" aria-hidden="true"></div>
 <canvas id="rain-canvas"></canvas>
 
 <div class="progress-ribbon" aria-hidden="true">
   <div class="progress-ribbon-fill" id="progressFill"></div>
 </div>
 
+<div class="utility-dock">
+  <button class="theme-toggle" id="themeToggleBtn" type="button" aria-pressed="false" aria-label="Gecə/gündüz rejimini dəyiş">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M12 2.5V5M12 19V21.5M4.2 4.2L6 6M18 18L19.8 19.8M2.5 12H5M19 12H21.5M4.2 19.8L6 18M18 6L19.8 4.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <span class="clock-display" id="clockDisplay" aria-live="off">--:--</span>
+</div>
+
 <button class="rain-toggle" id="rainToggleBtn" type="button" data-on="false" aria-pressed="false">
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <path d="M12 3C12 3 6.5 10.2 6.5 14.2C6.5 17.4 8.9 20 12 20C15.1 20 17.5 17.4 17.5 14.2C17.5 10.2 12 3 12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
   </svg>
-  <span class="rain-toggle-label" id="rainToggleLabel">Yağış səsi</span>
+  <span class="rain-toggle-label" id="rainToggleLabel">Yağış</span>
 </button>
 
 <a class="skip-link" href="#main">Əsas məzmuna keç</a>
@@ -501,6 +668,7 @@
     <a class="brand-mini" href="#top">NIHAD</a>
     <ul class="nav-links">
       <li><a href="#about">Haqqımda</a></li>
+      <li><a href="#quotes">Sitatlar</a></li>
       <li><a href="#books">Əsərlərim</a></li>
       <li><a href="#support">Dəstək</a></li>
     </ul>
@@ -513,7 +681,7 @@
       <p class="hero-eyebrow">Yazıçı, oxucu, tənqidçi</p>
       <div class="hero-name-stack">
         <p class="hero-name-shadow" id="heroShadow" aria-hidden="true">Nihad</p>
-        <h1 class="hero-name">Nihad</h1>
+        <h1 class="hero-name"><span class="visually-hidden">Nihad</span><span id="heroNameAnim" aria-hidden="true"></span></h1>
       </div>
       <p class="hero-tagline">"Aldadıcı ehtirasların çürütdüyü köhnə insanı üzərinizdən soyunub atın; ruhunuzun dərinliyində yenidən doğulun və Rəbbin öz surətinə görə yaratdığı, həqiqətdə və müqəddəslikdə parlayan, yeni insanı geyinin."</p>
       <svg class="ink-flourish" viewBox="0 0 220 22" aria-hidden="true">
@@ -539,6 +707,19 @@
         <h2 class="section-title">Qaranlıqda görsənməyən aydınlıq.</h2>
         <p>Dostoyevskidən bəhrələnmiş, son quruşunu ucuz rus arağında itirən dövrümüzün kefli İsgəndəri.</p>
       </div>
+    </div>
+  </section>
+
+  <section class="quotes" id="quotes">
+    <div class="wrap quotes-inner reveal">
+      <p class="section-eyebrow">Qeydlərimdən</p>
+      <h2 class="section-title">Həftənin sitatı</h2>
+      <div class="quote-carousel">
+        <button class="quote-nav" id="quotePrev" type="button" aria-label="Əvvəlki sitat">‹</button>
+        <blockquote class="quote-slide" id="quoteText"></blockquote>
+        <button class="quote-nav" id="quoteNext" type="button" aria-label="Növbəti sitat">›</button>
+      </div>
+      <div class="quote-dots" id="quoteDots"></div>
     </div>
   </section>
 
@@ -638,6 +819,161 @@
 </main>
 
 <script>
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+
+  /* --- 1. Ad, alov tutan kimi hərf-hərf işıqlanır --- */
+  (function(){
+    var el = document.getElementById('heroNameAnim');
+    if (!el) return;
+    var word = 'Nihad';
+    var startDelay = prefersReduced ? 0 : 0.35;
+    word.split('').forEach(function(ch, i){
+      var span = document.createElement('span');
+      span.className = 'flame-letter';
+      span.textContent = ch;
+      span.style.animationDelay = (startDelay + i * 0.1) + 's';
+      el.appendChild(span);
+    });
+  })();
+
+  /* --- 3. Kursor mürəkkəb izi --- */
+  (function(){
+    if (prefersReduced || coarsePointer) return;
+    var layer = document.createElement('div');
+    layer.className = 'ink-trail-layer';
+    layer.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(layer);
+    var lastTime = 0;
+    var blots = [];
+    window.addEventListener('mousemove', function(e){
+      var now = Date.now();
+      if (now - lastTime < 75) return;
+      lastTime = now;
+      var blot = document.createElement('span');
+      blot.className = 'ink-blot';
+      var size = 5 + Math.random() * 7;
+      blot.style.width = size + 'px';
+      blot.style.height = size + 'px';
+      blot.style.left = (e.clientX - size / 2) + 'px';
+      blot.style.top = (e.clientY - size / 2) + 'px';
+      layer.appendChild(blot);
+      blots.push(blot);
+      if (blots.length > 24) {
+        var old = blots.shift();
+        if (old.parentNode) old.parentNode.removeChild(old);
+      }
+      setTimeout(function(){
+        blot.classList.add('ink-blot-fade');
+        setTimeout(function(){ if (blot.parentNode) blot.parentNode.removeChild(blot); }, 800);
+      }, 30);
+    }, { passive: true });
+  })();
+
+  /* --- 20. Kitab rəfi siluetinin parallaksı --- */
+  (function(){
+    var ticking = false;
+    function updateParallax(){
+      var shift = (window.scrollY || 0) * -0.05;
+      document.documentElement.style.setProperty('--spine-shift', shift + 'px');
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if (!ticking) { requestAnimationFrame(updateParallax); ticking = true; }
+    }, { passive: true });
+    updateParallax();
+  })();
+
+  /* --- 22 & 95. Gecə/gündüz rejimi, saat və gecə-yarısı ab-havası --- */
+  (function(){
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggleBtn');
+    var clockEl = document.getElementById('clockDisplay');
+    var stored = null;
+    try { stored = localStorage.getItem('nihad-theme'); } catch (e) {}
+    var theme = stored || 'night';
+
+    function updateLateNight(){
+      var h = new Date().getHours();
+      var isDay = root.getAttribute('data-theme') === 'day';
+      if (!isDay && h >= 0 && h < 5) document.body.classList.add('late-night');
+      else document.body.classList.remove('late-night');
+    }
+
+    function applyTheme(t){
+      if (t === 'day') root.setAttribute('data-theme', 'day');
+      else root.removeAttribute('data-theme');
+      if (btn) btn.setAttribute('aria-pressed', t === 'day' ? 'true' : 'false');
+      updateLateNight();
+    }
+
+    applyTheme(theme);
+
+    if (btn) {
+      btn.addEventListener('click', function(){
+        theme = (root.getAttribute('data-theme') === 'day') ? 'night' : 'day';
+        applyTheme(theme);
+        try { localStorage.setItem('nihad-theme', theme); } catch (e) {}
+      });
+    }
+
+    function pad(n){ return n < 10 ? '0' + n : '' + n; }
+    function updateClock(){
+      var d = new Date();
+      if (clockEl) clockEl.textContent = pad(d.getHours()) + ':' + pad(d.getMinutes());
+      updateLateNight();
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+  })();
+
+  /* --- 50. Sitatlar arxivi (karusel) --- */
+  (function(){
+    var quotes = [
+      'Sükut bəzən ən dürüst cümlədir.',
+      'Hər yazı, unudulmaqdan qorunmaq üçün yazılan bir məktubdur.',
+      'İnsan yalnız itirdiyini adlandırmağı bacardıqda böyüyür.',
+      'Qaranlıq qorxulu deyil — orada özünü tapmayanlar üçün qorxuludur.',
+      'Bəzən ən uzun yol, öz otağının içindən keçir.'
+    ];
+    var textEl = document.getElementById('quoteText');
+    var dotsEl = document.getElementById('quoteDots');
+    var prevBtn = document.getElementById('quotePrev');
+    var nextBtn = document.getElementById('quoteNext');
+    if (!textEl || !dotsEl) return;
+    var idx = 0;
+    var timer = null;
+
+    quotes.forEach(function(_, i){
+      var dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'quote-dot';
+      dot.setAttribute('aria-label', 'Sitat ' + (i + 1));
+      dot.addEventListener('click', function(){ show(i); restart(); });
+      dotsEl.appendChild(dot);
+    });
+
+    function show(i){
+      idx = (i + quotes.length) % quotes.length;
+      textEl.classList.remove('quote-in');
+      void textEl.offsetWidth;
+      textEl.textContent = quotes[idx];
+      textEl.classList.add('quote-in');
+      Array.prototype.forEach.call(dotsEl.children, function(d, di){
+        d.classList.toggle('active', di === idx);
+      });
+    }
+    function restart(){
+      if (timer) clearInterval(timer);
+      timer = setInterval(function(){ show(idx + 1); }, 7000);
+    }
+    if (prevBtn) prevBtn.addEventListener('click', function(){ show(idx - 1); restart(); });
+    if (nextBtn) nextBtn.addEventListener('click', function(){ show(idx + 1); restart(); });
+
+    show(0);
+    restart();
+  })();
+
   /* --- Yağış effekti (Canvas) --- */
   const canvas = document.getElementById('rain-canvas');
   const ctx = canvas.getContext('2d');
@@ -662,9 +998,14 @@
     });
   }
 
+  function getRainColor() {
+    var rgb = getComputedStyle(document.documentElement).getPropertyValue('--rain-color-rgb').trim() || '134,183,156';
+    return 'rgba(' + rgb + ', 0.38)';
+  }
+
   function animateRain() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = 'rgba(134, 183, 156, 0.38)';
+    ctx.strokeStyle = getRainColor();
     ctx.lineWidth = 1;
     ctx.lineCap = 'round';
 
@@ -727,7 +1068,7 @@
       isPlaying = true;
       btn.dataset.on = "true";
       btn.setAttribute('aria-pressed', 'true');
-      label.textContent = 'Yağış səsi: açıq';
+      label.textContent = 'Yağış: açıq';
     } else {
       if (noiseNode) {
         noiseNode.stop();
@@ -739,11 +1080,56 @@
       isPlaying = false;
       btn.dataset.on = "false";
       btn.setAttribute('aria-pressed', 'false');
-      label.textContent = 'Yağış səsi';
+      label.textContent = 'Yağış';
     }
   }
 
   document.getElementById('rainToggleBtn').addEventListener('click', toggleRainSound);
+
+  /* --- 17. Uzaq ildırım: təsadüfi çaxma + (yağış səsi açıqsa) yumşaq gurultu --- */
+  function playThunderRumble(){
+    try {
+      var t = audioCtx.currentTime;
+      var bufferSize = Math.floor(audioCtx.sampleRate * 1.2);
+      var buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      var data = buffer.getChannelData(0);
+      for (var i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 2);
+      }
+      var src = audioCtx.createBufferSource();
+      src.buffer = buffer;
+      var filter = audioCtx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(220, t);
+      var g = audioCtx.createGain();
+      g.gain.setValueAtTime(0.0, t);
+      g.gain.linearRampToValueAtTime(0.06, t + 0.15);
+      g.gain.linearRampToValueAtTime(0.0, t + 1.1);
+      src.connect(filter);
+      filter.connect(g);
+      g.connect(audioCtx.destination);
+      src.start();
+    } catch (e) {}
+  }
+
+  (function(){
+    var flash = document.getElementById('lightningFlash');
+    if (!flash || prefersReduced) return;
+    function fireFlash(){
+      flash.classList.add('flash-active');
+      setTimeout(function(){ flash.classList.remove('flash-active'); }, 280);
+    }
+    function scheduleFlash(){
+      var delay = 10000 + Math.random() * 16000;
+      setTimeout(function(){
+        fireFlash();
+        if (Math.random() < 0.4) setTimeout(fireFlash, 340);
+        if (isPlaying && audioCtx) playThunderRumble();
+        scheduleFlash();
+      }, delay);
+    }
+    scheduleFlash();
+  })();
 
   /* --- Oxuma zolağı (scroll progress ribbon) --- */
   const progressFill = document.getElementById('progressFill');
@@ -758,10 +1144,7 @@
   updateProgress();
 
   /* --- Mövcud interaktiv skriptlər --- */
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var coarsePointer = window.matchMedia('(pointer: coarse)').matches;
-
-  if (!reduceMotion && !coarsePointer) {
+  if (!prefersReduced && !coarsePointer) {
     var shadow = document.getElementById('heroShadow');
     document.querySelector('.hero').addEventListener('mousemove', function(e){
       var rect = this.getBoundingClientRect();
