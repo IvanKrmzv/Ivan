@@ -138,6 +138,9 @@
     background:radial-gradient(ellipse, rgba(0,0,0,0.55), transparent 72%); filter:blur(2px);
   }
   @container (max-width:640px){ .cup-corner{display:none;} }
+  .cup-corner{transition:opacity 0.5s ease, transform 0.5s ease;}
+  .cup-corner.gone{opacity:0; transform:translateY(16px) scale(0.96); pointer-events:none;}
+  .pour-pot.gone{opacity:0 !important; pointer-events:none;}
   @container (max-width:1000px){
     .desk-surface{width:100%;}
 
@@ -349,22 +352,40 @@
      ========================================================= */
 
   /* ---- candle-driven lighting -------------------------------------- */
-  :root{ --cx:78%; --cy:12%; --lr:62vmax; --lint:1; }
+  :root{ --cx:78%; --cy:12%; --lr:26vmax; --lint:1; }
   .light-layer{position:fixed; inset:0; pointer-events:none; z-index:26;}
+  /* qaranlıq: yalnız şamın ətrafı görünür, qalanı dərin qaranlıq */
   #lightDark{
     background:radial-gradient(circle var(--lr) at var(--cx) var(--cy),
-      rgba(255,255,255,1) 0%, rgba(228,218,200,1) 26%,
-      rgba(150,132,104,1) 62%, rgba(78,62,42,1) 100%);
-    mix-blend-mode:multiply; opacity:calc(0.6 * var(--lint));
+      rgba(255,244,224,1) 0%,
+      rgba(226,197,158,1) 12%,
+      rgba(150,120,86,1) 26%,
+      rgba(74,56,38,1) 44%,
+      rgba(28,20,13,1) 64%,
+      rgba(8,6,4,1) 85%,
+      rgba(4,3,2,1) 100%);
+    mix-blend-mode:multiply; opacity:calc(0.96 * var(--lint));
   }
+  /* isti şam işığı: nüvə → amber → dərin narıncı hal */
   #lightWarm{
     background:
-      radial-gradient(circle calc(var(--lr) * 0.34) at var(--cx) var(--cy),
-        rgba(255,196,110,0.42), rgba(255,168,74,0.16) 46%, transparent 76%);
-    mix-blend-mode:screen; opacity:calc(0.9 * var(--lint));
-    animation:lamp-breathe 4.5s ease-in-out infinite;
+      radial-gradient(circle calc(var(--lr) * 0.16) at var(--cx) var(--cy),
+        rgba(255,232,182,0.7), rgba(255,190,104,0.3) 60%, transparent 100%),
+      radial-gradient(circle calc(var(--lr) * 0.62) at var(--cx) var(--cy),
+        rgba(255,172,80,0.34) 0%, rgba(255,138,46,0.14) 45%, rgba(196,92,24,0.04) 74%, transparent 90%);
+    mix-blend-mode:screen; opacity:calc(0.95 * var(--lint));
+    animation:lamp-breathe 5.4s ease-in-out infinite, flame-flicker 2.3s steps(1,end) infinite;
   }
-  @keyframes lamp-breathe{0%,100%{filter:brightness(1);}45%{filter:brightness(1.09);}70%{filter:brightness(0.95);}}
+
+  @keyframes lamp-breathe{0%,100%{filter:brightness(1);}45%{filter:brightness(1.1) saturate(1.05);}70%{filter:brightness(0.93);}}
+  @keyframes flame-flicker{
+    0%,100%{opacity:calc(0.95 * var(--lint));}
+    17%{opacity:calc(0.88 * var(--lint));}
+    31%{opacity:calc(1 * var(--lint));}
+    52%{opacity:calc(0.91 * var(--lint));}
+    68%{opacity:calc(0.98 * var(--lint));}
+    84%{opacity:calc(0.9 * var(--lint));}
+  }
   @media (prefers-reduced-motion:reduce){ #lightWarm{animation:none;} }
   /* on the cover the candle lighting shouldn't dim the artwork */
   body:not(.reading) #lightDark{opacity:0.16;}
@@ -565,6 +586,87 @@
     opacity:0; transition:opacity 0.4s ease;
   }
   #rotateHint.show{opacity:1;}
+
+  /* ============================================================
+     GECƏ REJİMİ — dərin qaranlıq otaq + realistik şam işığı
+     ============================================================ */
+  :root{
+    --lr:26vmax;          /* şamın işıq radiusu */
+    --lint:1;             /* canlı alov intensivliyi (JS ilə dəyişir) */
+    --flick:1;            /* ani titrəyiş */
+  }
+
+  /* Otağın özü daha qaranlıq: taxta masa artıq günəş altında deyil */
+  body.reading::after{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:25;
+    background:radial-gradient(ellipse 120% 100% at var(--cx) var(--cy),
+      rgba(0,0,0,0) 0%, rgba(0,0,0,0.42) 38%, rgba(0,0,0,0.86) 82%, rgba(0,0,0,0.93) 100%);
+  }
+
+  /* Qaranlıq maskası: yalnız şamın radiusu daxilində rahat oxunur,
+     kənarlar çətinliklə seçilir, tam qara deyil */
+  body.reading #lightDark{
+    opacity:1;
+    background:radial-gradient(circle calc(var(--lr) * var(--flick)) at var(--cx) var(--cy),
+      rgba(255,247,232,1) 0%,
+      rgba(252,238,214,1) 14%,
+      rgba(226,199,160,1) 28%,
+      rgba(138,108,76,1) 42%,
+      rgba(60,45,30,1) 56%,
+      rgba(24,18,12,1) 70%,
+      rgba(12,9,6,1) 84%,
+      rgba(8,6,4,1) 100%);
+  }
+
+  /* İsti şam işığı — nüvə, hale və uzaq amber yayılma */
+  body.reading #lightWarm{
+    animation:none;
+    opacity:calc(0.98 * var(--lint));
+    background:
+      radial-gradient(circle calc(var(--lr) * 0.10 * var(--flick)) at var(--cx) var(--cy),
+        rgba(255,240,206,0.85), rgba(255,203,124,0.42) 60%, transparent 100%),
+      radial-gradient(circle calc(var(--lr) * 0.42 * var(--flick)) at var(--cx) var(--cy),
+        rgba(255,186,98,0.34) 0%, rgba(255,150,58,0.16) 52%, transparent 88%),
+      radial-gradient(circle calc(var(--lr) * 0.95 * var(--flick)) at var(--cx) var(--cy),
+        rgba(226,132,44,0.13) 0%, rgba(168,86,22,0.05) 55%, transparent 92%);
+    filter:brightness(calc(0.94 + 0.14 * var(--flick)));
+  }
+
+  /* Səhifə kağızı şam işığında: soyuq ağ yox, isti mum rəngi */
+  body.reading .page{ filter:saturate(1.04) brightness(0.99); }
+
+  /* Alov halesi — canlı titrəyiş JS-dən gəlir */
+  .candle-corner .halo{
+    animation:none;
+    width:420%; padding-bottom:420%;
+    background:radial-gradient(circle,
+      rgba(255,214,150,0.42) 0%,
+      rgba(255,178,84,0.20) 32%,
+      rgba(255,150,54,0.08) 55%,
+      transparent 74%);
+    opacity:calc(0.8 + 0.3 * var(--flick));
+    transform:translate(-50%,-52%) scale(var(--flick));
+  }
+  .flame-core{animation:flame-dance 1.55s ease-in-out infinite;}
+  .flame-outer{animation:flame-dance 2.1s ease-in-out infinite reverse;}
+  @keyframes flame-dance{
+    0%,100%{transform:scale(1,1) skewX(0deg) translateY(0);}
+    12%{transform:scale(0.94,1.10) skewX(-4deg) translateY(-0.6px);}
+    27%{transform:scale(1.04,0.95) skewX(3deg) translateY(0.3px);}
+    41%{transform:scale(0.97,1.06) skewX(-2deg) translateY(-0.4px);}
+    58%{transform:scale(1.06,0.92) skewX(4.5deg) translateY(0.5px);}
+    73%{transform:scale(0.95,1.08) skewX(-3deg) translateY(-0.3px);}
+    88%{transform:scale(1.02,0.97) skewX(1.5deg) translateY(0);}
+  }
+  .candle-corner{filter:drop-shadow(0 18px 26px rgba(0,0,0,0.75));}
+
+  /* Qaranlıqda üst panel və düymələr daha yumşaq */
+  body.reading .reader-bar{background:rgba(12,7,4,0.92);}
+  body.reading .prop-btn{background:rgba(16,10,5,0.78);}
+
+  @media (prefers-reduced-motion:reduce){
+    .flame-core,.flame-outer{animation:none;}
+  }
 </style>
 </head>
 <body>
@@ -614,7 +716,7 @@
     <div class="desk-surface" aria-hidden="true">
       <div class="desk-plane"></div>
     </div>
-    <div class="cup-corner" aria-hidden="true">
+    <div class="cup-corner" id="cupCorner" aria-hidden="true">
       <div class="cup-floor"></div>
       <div class="prop-cup" id="teaCup">
         <svg viewBox="0 0 150 132" xmlns="http://www.w3.org/2000/svg">
@@ -835,6 +937,9 @@
       </button>
       <button class="prop-btn" id="btnEmpty" type="button" aria-label="İçkini sil" title="İçkini sil">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7l1 13h10l1-13"/></svg>
+      </button>
+      <button class="prop-btn" id="btnNoDrink" type="button" aria-label="İçkini götür" title="İçki istəmirəm — stəkanı götür">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h13v6a6.5 6.5 0 0 1-13 0z"/><path d="M17 8h2.5a2.5 2.5 0 0 1 0 5H17"/><path d="M3 3l18 18"/></svg>
       </button>
       <button class="prop-btn" id="btnAsh" type="button" aria-label="Külqabını sil" title="Külqabını gizlə / göstər">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><ellipse cx="12" cy="15" rx="9" ry="4.5"/><path d="M8 12l6-6"/><path d="M14 6l2 1"/></svg>
@@ -1333,7 +1438,7 @@
   window.__getAudio = function(){ ensureAudio(); if(audioCtx && audioCtx.state === "suspended"){ audioCtx.resume(); } return audioCtx; };
   var sipTimer = null;
   function scheduleSip(){
-    var delay = 13000 + Math.random() * 11000;
+    var delay = 42000 + Math.random() * 34000;
     sipTimer = setTimeout(function(){
       if(!reader.hidden && window.DRINK){ window.DRINK.sip(); }
       scheduleSip();
@@ -1697,7 +1802,7 @@
   ];
   var teaGroup = cup ? cup.querySelector('.cup-tea') : null;
   var teaStops = cup ? cup.querySelectorAll('#tea stop') : [];
-  var state = {type:1, level:1, straw:false, busy:false, refilling:false};
+  var state = {type:1, level:1, straw:false, busy:false, refilling:false, off:false};
 
   function showNote(txt){
     if(!note) return;
@@ -1735,7 +1840,7 @@
   }
 
   function sip(){
-    if(!cup || state.busy || state.refilling) return;
+    if(!cup || state.off || state.busy || state.refilling) return;
     if(state.level <= 0.02){
       if(!state.refilling) refill();
       return;
@@ -1746,7 +1851,7 @@
       cup.classList.add('no-lift', 'sipping');
       if(straw){ straw.classList.add('drinking'); }
       if(window.SFX) window.SFX.strawSip();
-      drain(0.15, 250);
+      drain(0.06, 400);
       setTimeout(function(){
         cup.classList.remove('sipping', 'no-lift');
         if(straw) straw.classList.remove('drinking');
@@ -1756,7 +1861,7 @@
       cup.classList.remove('no-lift');
       cup.classList.add('sipping');
       if(window.__playSipSound){ setTimeout(window.__playSipSound, 900); }
-      drain(0.17, 1050);
+      drain(0.07, 1100);
       setTimeout(function(){
         cup.classList.remove('sipping');
         state.busy = false;
@@ -1765,7 +1870,7 @@
   }
 
   function refill(){
-    if(state.refilling || !pot) return;
+    if(state.off || state.refilling || !pot) return;
     state.refilling = true;
     var d = DRINKS[state.type];
     showNote(d.name + ' süzülür');
@@ -1821,6 +1926,17 @@
     state.level = 0;
     applyLevel();
     showNote('Stəkan boşaldıldı');
+  });
+
+  var btnNoDrink = document.getElementById('btnNoDrink');
+  var cupCorner = document.getElementById('cupCorner');
+  if(btnNoDrink) btnNoDrink.addEventListener('click', function(){
+    state.off = !state.off;
+    btnNoDrink.classList.toggle('active', state.off);
+    if(cupCorner) cupCorner.classList.toggle('gone', state.off);
+    if(pot) pot.classList.toggle('gone', state.off);
+    if(state.off && cup){ cup.classList.remove('sipping','no-lift'); state.busy = false; }
+    showNote(state.off ? 'İçki götürüldü' : 'İçki qaytarıldı');
   });
 
   if(btnAsh) btnAsh.addEventListener('click', function(){
@@ -1909,6 +2025,29 @@
     if(!coarse) return;
     if(e.target.closest && e.target.closest('#startBtn')) lockLandscape();
   }, true);
+})();
+</script>
+
+<script>
+/* realistik şam titrəyişi: yumşaq təsadüfi səs-küy + arabir "külək" zəifləməsi */
+(function(){
+  var root=document.documentElement;
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var cur=1,target=1,gustUntil=0,gustDepth=0,last=0;
+  function rnd(a,b){return a+Math.random()*(b-a);}
+  function tick(t){
+    if(t-last>70){
+      last=t;
+      target=rnd(0.93,1.07);
+      if(t>gustUntil&&Math.random()<0.03){ gustUntil=t+rnd(320,900); gustDepth=rnd(0.68,0.84); }
+      if(t<gustUntil) target*=gustDepth;
+    }
+    cur+=(target-cur)*0.16;
+    root.style.setProperty('--flick',cur.toFixed(3));
+    root.style.setProperty('--lint',(0.88+0.22*cur).toFixed(3));
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 })();
 </script>
 </body>
