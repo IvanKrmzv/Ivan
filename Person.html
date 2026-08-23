@@ -594,7 +594,10 @@
     --lr:26vmax;          /* şamın işıq radiusu */
     --lint:1;             /* canlı alov intensivliyi (JS ilə dəyişir) */
     --flick:1;            /* ani titrəyiş */
+    --breath:1;           /* yavaş nəfəs: işıq bəzən zəifləyir, bəzən güclənir */
+    --melt:0;             /* şamın çox yavaş əriməsi (SVG vahidi) */
   }
+
 
   /* Otağın özü daha qaranlıq: taxta masa artıq günəş altında deyil */
   body.reading::after{
@@ -607,43 +610,44 @@
      kənarlar çətinliklə seçilir, tam qara deyil */
   body.reading #lightDark{
     opacity:1;
-    background:radial-gradient(circle calc(var(--lr) * var(--flick)) at var(--cx) var(--cy),
-      rgba(255,247,232,1) 0%,
-      rgba(252,238,214,1) 14%,
-      rgba(226,199,160,1) 28%,
-      rgba(138,108,76,1) 42%,
-      rgba(60,45,30,1) 56%,
-      rgba(24,18,12,1) 70%,
-      rgba(12,9,6,1) 84%,
-      rgba(8,6,4,1) 100%);
+    background:radial-gradient(circle calc(var(--lr) * var(--flick) * var(--breath)) at var(--cx) var(--cy),
+      rgba(255,238,208,1) 0%,
+      rgba(252,224,182,1) 14%,
+      rgba(224,176,120,1) 28%,
+      rgba(140,92,52,1) 42%,
+      rgba(64,38,20,1) 56%,
+      rgba(26,15,9,1) 70%,
+      rgba(13,8,5,1) 84%,
+      rgba(8,5,3,1) 100%);
   }
 
-  /* İsti şam işığı — nüvə, hale və uzaq amber yayılma */
+  /* İsti şam işığı — qırmızımtıl-narıncı nüvə, hale və uzaq mis yayılma */
   body.reading #lightWarm{
     animation:none;
-    opacity:calc(0.98 * var(--lint));
+    opacity:calc(0.98 * var(--lint) * var(--breath));
     background:
-      radial-gradient(circle calc(var(--lr) * 0.10 * var(--flick)) at var(--cx) var(--cy),
-        rgba(255,240,206,0.85), rgba(255,203,124,0.42) 60%, transparent 100%),
-      radial-gradient(circle calc(var(--lr) * 0.42 * var(--flick)) at var(--cx) var(--cy),
-        rgba(255,186,98,0.34) 0%, rgba(255,150,58,0.16) 52%, transparent 88%),
-      radial-gradient(circle calc(var(--lr) * 0.95 * var(--flick)) at var(--cx) var(--cy),
-        rgba(226,132,44,0.13) 0%, rgba(168,86,22,0.05) 55%, transparent 92%);
-    filter:brightness(calc(0.94 + 0.14 * var(--flick)));
+      radial-gradient(circle calc(var(--lr) * 0.10 * var(--flick) * var(--breath)) at var(--cx) var(--cy),
+        rgba(255,226,170,0.85), rgba(255,168,86,0.44) 60%, transparent 100%),
+      radial-gradient(circle calc(var(--lr) * 0.42 * var(--flick) * var(--breath)) at var(--cx) var(--cy),
+        rgba(255,138,56,0.36) 0%, rgba(238,96,30,0.18) 52%, transparent 88%),
+      radial-gradient(circle calc(var(--lr) * 0.95 * var(--flick) * var(--breath)) at var(--cx) var(--cy),
+        rgba(214,80,26,0.15) 0%, rgba(150,48,12,0.06) 55%, transparent 92%);
+    filter:brightness(calc((0.9 + 0.16 * var(--flick)) * var(--breath))) saturate(1.15);
   }
 
   /* Səhifə kağızı şam işığında: soyuq ağ yox, isti mum rəngi */
-  body.reading .page{ filter:saturate(1.04) brightness(0.99); }
+  body.reading .page{ filter:saturate(1.1) brightness(calc(0.97 * var(--breath))) sepia(0.06); }
 
   /* Alov halesi — canlı titrəyiş JS-dən gəlir */
   .candle-corner .halo{
     animation:none;
     width:420%; padding-bottom:420%;
     background:radial-gradient(circle,
-      rgba(255,214,150,0.42) 0%,
-      rgba(255,178,84,0.20) 32%,
-      rgba(255,150,54,0.08) 55%,
+      rgba(255,196,120,0.44) 0%,
+      rgba(255,140,54,0.22) 32%,
+      rgba(226,74,20,0.09) 55%,
       transparent 74%);
+
     opacity:calc(0.8 + 0.3 * var(--flick));
     transform:translate(-50%,-52%) scale(var(--flick));
   }
@@ -659,6 +663,12 @@
     88%{transform:scale(1.02,0.97) skewX(1.5deg) translateY(0);}
   }
   .candle-corner{filter:drop-shadow(0 18px 26px rgba(0,0,0,0.75));}
+
+  /* Şam çox yavaş əriyir: mum sütunu, alovla birlikdə tədricən aşağı enir */
+  #waxGroup{ transform:translateY(calc(var(--melt) * 1px)); }
+  /* alov və hale bir az daha qırmızımtıl-narıncı */
+  .candle-corner svg{ filter:hue-rotate(-8deg) saturate(1.18); }
+
 
   /* Qaranlıqda üst panel və düymələr daha yumşaq */
   body.reading .reader-bar{background:rgba(12,7,4,0.92);}
@@ -827,7 +837,9 @@
         <ellipse cx="45" cy="205" rx="27" ry="7.5" fill="none" stroke="#7a5a26" stroke-width="0.8"/>
         <path d="M27 205c0-12 6-16 18-16s18 4 18 16" fill="url(#brassG)" opacity="0.9"/>
 
-        <!-- wax column with uneven top and drips -->
+        <!-- wax column with uneven top and drips (yavaş-yavaş əriyir) -->
+        <g id="waxGroup">
+
         <path d="M24 62c0-5 3-8 8-9 6-1 20-2 26 1 4 2 6 4 6 8v128c0 6-9 9-20 9s-20-3-20-9z" fill="url(#waxG)"/>
         <path d="M27 66c-1 40-1 90 0 126" stroke="#ffffff" stroke-width="5" opacity="0.35" fill="none" stroke-linecap="round"/>
         <path d="M63 70c1 38 1 88 0 122" stroke="#4b3f28" stroke-width="6" opacity="0.16" fill="none" stroke-linecap="round"/>
@@ -849,7 +861,9 @@
         <path class="flame-outer" d="M45 6c8 11 13 19 13 28a13 13 0 0 1-26 0c0-9 5-17 13-28z" fill="url(#flameOuterG)" filter="url(#tinyBlur)"/>
         <path class="flame-core" d="M45 16c4.6 7 7.4 12 7.4 17.4a7.4 7.4 0 0 1-14.8 0c0-5.4 2.8-10.4 7.4-17.4z" fill="url(#flameCoreG)"/>
         <ellipse class="flame-core" cx="45" cy="44" rx="3.6" ry="5" fill="#6fa8ff" opacity="0.55" filter="url(#tinyBlur)"/>
+        </g>
       </svg>
+
     </div>
 
     <div class="ashtray-corner" id="ashtrayProp" aria-hidden="true">
@@ -2029,26 +2043,117 @@
 </script>
 
 <script>
-/* realistik şam titrəyişi: yumşaq təsadüfi səs-küy + arabir "külək" zəifləməsi */
+/* realistik şam titrəyişi + yavaş nəfəs + çox yavaş ərimə */
 (function(){
   var root=document.documentElement;
   if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
   var cur=1,target=1,gustUntil=0,gustDepth=0,last=0;
+  /* nəfəs: ~1 saniyəlik zəifləmə/güclənmə dalğaları */
+  var breath=1,bTarget=1,bUntil=0,startT=0,meltStart=0;
   function rnd(a,b){return a+Math.random()*(b-a);}
   function tick(t){
+    if(!startT){ startT=t; meltStart=t; }
     if(t-last>70){
       last=t;
       target=rnd(0.93,1.07);
       if(t>gustUntil&&Math.random()<0.03){ gustUntil=t+rnd(320,900); gustDepth=rnd(0.68,0.84); }
       if(t<gustUntil) target*=gustDepth;
     }
+    /* hər dəfə ~1 saniyəlik yeni nəfəs hədəfi: bəzən zəif, bəzən güclü */
+    if(t>bUntil){
+      bUntil=t+rnd(700,1600);
+      bTarget=Math.random()<0.5?rnd(0.82,0.95):rnd(1.02,1.14);
+    }
+    breath+=(bTarget-breath)*0.012;
     cur+=(target-cur)*0.16;
     root.style.setProperty('--flick',cur.toFixed(3));
+    root.style.setProperty('--breath',breath.toFixed(3));
     root.style.setProperty('--lint',(0.88+0.22*cur).toFixed(3));
+    /* ərimə: təxminən 45 dəqiqəyə 22 vahid — gözlə güclə seçilən yavaşlıqda */
+    var melt=Math.min(22,(t-meltStart)/1000*(22/2700));
+    root.style.setProperty('--melt',melt.toFixed(3));
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
 })();
 </script>
+
+<script>
+/* oxucunun yerinə uyğun hava durumu — arxa planda çox zəif ambient səs */
+(function(){
+  var ac=null, master=null, started=false, weather=null;
+
+  function makeNoise(ac, dur){
+    var n=Math.floor(ac.sampleRate*dur), buf=ac.createBuffer(1,n,ac.sampleRate), d=buf.getChannelData(0), last=0;
+    for(var i=0;i<n;i++){ var w=Math.random()*2-1; last=0.86*last+0.14*w; d[i]=last*2.2; }
+    return buf;
+  }
+
+  function layer(cfg){
+    var src=ac.createBufferSource();
+    src.buffer=makeNoise(ac,6); src.loop=true;
+    var f=ac.createBiquadFilter();
+    f.type=cfg.type; f.frequency.value=cfg.freq; f.Q.value=cfg.q||0.7;
+    var g=ac.createGain(); g.gain.value=cfg.gain;
+    src.connect(f); f.connect(g); g.connect(master); src.start();
+    if(cfg.lfo){
+      var lfo=ac.createOscillator(), lg=ac.createGain();
+      lfo.frequency.value=cfg.lfo; lg.gain.value=cfg.gain*0.6;
+      lfo.connect(lg); lg.connect(g.gain); lfo.start();
+    }
+    return g;
+  }
+
+  function build(code, wind){
+    // WMO kodları: 51-67 / 80-82 yağış, 71-77/85-86 qar, 95+ tufan
+    var rain = (code>=51&&code<=67)||(code>=80&&code<=82)||code>=95;
+    var snow = (code>=71&&code<=77)||code===85||code===86;
+    var fog  = code===45||code===48;
+    if(rain){
+      layer({type:'bandpass',freq:1300,q:0.5,gain:0.055,lfo:0.09});
+      layer({type:'lowpass',freq:420,gain:0.035,lfo:0.05});
+      if(code>=95) layer({type:'lowpass',freq:110,gain:0.03,lfo:0.02});
+    } else if(snow){
+      layer({type:'lowpass',freq:260,gain:0.026,lfo:0.03});
+    } else if(fog){
+      layer({type:'lowpass',freq:180,gain:0.022,lfo:0.02});
+    }
+    var w=Math.max(0, Math.min(1,(wind||0)/45));
+    if(w>0.08) layer({type:'bandpass',freq:240+w*260,q:0.6,gain:0.02+w*0.05,lfo:0.04});
+    if(!rain&&!snow&&!fog&&w<=0.08) layer({type:'lowpass',freq:150,gain:0.012,lfo:0.015});
+  }
+
+  function start(){
+    if(started||!weather) return;
+    try{ ac=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return; }
+    started=true;
+    master=ac.createGain(); master.gain.value=0; master.connect(ac.destination);
+    build(weather.code, weather.wind);
+    master.gain.linearRampToValueAtTime(0.5, ac.currentTime+6); // ümumi səviyyə çox aşağı
+    if(ac.state==='suspended') ac.resume();
+  }
+
+  function load(){
+    fetch('https://ipapi.co/json/').then(function(r){return r.json();}).then(function(loc){
+      if(!loc||!loc.latitude) throw 0;
+      return fetch('https://api.open-meteo.com/v1/forecast?latitude='+loc.latitude+'&longitude='+loc.longitude+'&current=weather_code,wind_speed_10m');
+    }).then(function(r){return r.json();}).then(function(d){
+      var c=d&&d.current;
+      weather={code:c?c.weather_code:0, wind:c?c.wind_speed_10m:0};
+      start();
+    }).catch(function(){ weather={code:0,wind:6}; start(); });
+  }
+
+  ['pointerdown','keydown','touchstart'].forEach(function(ev){
+    document.addEventListener(ev, function once(){
+      document.removeEventListener(ev, once, true);
+      if(started){ if(ac&&ac.state==='suspended') ac.resume(); }
+      else if(weather) start(); else load();
+    }, true);
+  });
+  load();
+})();
+</script>
+
 </body>
 </html>
