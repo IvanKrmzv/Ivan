@@ -682,6 +682,31 @@
      miqyaslanır, lazım olduqda 90° fırladılır. Ayrı mobil layout yoxdur. */
   #rotateHint{bottom:calc(1.1rem + env(safe-area-inset-bottom));}
 </style>
+<script>
+  /* Mobil: şam sabit qalır, ekranı sabit işıqlandırır (sürükləmə yoxdur) */
+  window.__MOBILE_CANDLE = (function(){
+    try{
+      return window.matchMedia('(pointer:coarse)').matches
+        || (navigator.maxTouchPoints || 0) > 0
+        || window.matchMedia('(max-width:820px)').matches;
+    }catch(e){ return false; }
+  })();
+  document.addEventListener('DOMContentLoaded', function(){
+    if(!window.__MOBILE_CANDLE) return;
+    document.documentElement.classList.add('static-candle');
+    var c = document.getElementById('candleProp');
+    if(c) c.removeAttribute('title');
+    var t = document.getElementById('candleTip');
+    if(t && t.parentNode) t.parentNode.removeChild(t);
+  });
+</script>
+<style>
+  /* Mobil: sürükləmə jesti və ipucu tamamilə söndürülür */
+  html.static-candle .candle-corner{ pointer-events:none !important; cursor:default !important; touch-action:auto !important; }
+  html.static-candle .candle-tip{ display:none !important; }
+  /* Sabit, geniş və bərabər şam işığı */
+  html.static-candle{ --cx:50% !important; --cy:26% !important; --lr:74vmax !important; --flick:1 !important; --breath:1 !important; }
+</style>
 </head>
 <body>
 <div id="rotor">
@@ -1471,7 +1496,7 @@
   }
   window.hideCandleTip = hideCandleTip;
   function showCandleTip(){
-    if(!candleTipEl) return;
+    if(!candleTipEl || window.__MOBILE_CANDLE) return;
     setTimeout(function(){
       candleTipEl.classList.remove('tip-right');
       candleTipEl.classList.add('show');
@@ -1693,6 +1718,12 @@
   var root = document.documentElement;
   function updateLight(){
     if(!candle) return;
+    if(window.__MOBILE_CANDLE){
+      /* mobil: işıq mənbəyi sabitdir, şam yerindən tərpənmir */
+      root.style.setProperty('--cx', '50%');
+      root.style.setProperty('--cy', '26%');
+      return;
+    }
     var r = candle.getBoundingClientRect();
     if(!r.width) return;
     var __rr = document.getElementById('rotor').getBoundingClientRect();
@@ -1704,7 +1735,7 @@
   }
 
   var dragging = false, grabDX = 0, grabDY = 0;
-  if(candle){
+  if(candle && !window.__MOBILE_CANDLE){
     candle.addEventListener('pointerdown', function(e){
       var r = candle.getBoundingClientRect();
       var __p = window.__local(e.clientX, e.clientY, r);
