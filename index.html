@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nihad</title>
+<title>Ivan</title>
 <meta name="description" content="Yazıçının kitabları, haqqında qısa məlumat və dəstək bölməsi.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -664,7 +664,7 @@
 
 <nav class="topnav">
   <div class="topnav-inner">
-    <a class="brand-mini" href="#top">NIHAD</a>
+    <a class="brand-mini" href="#top">Ivan</a>
     <ul class="nav-links">
       <li><a href="#about">Haqqımda</a></li>
       <li><a href="#quotes">Sitatlar</a></li>
@@ -679,8 +679,8 @@
     <div class="wrap hero-inner">
       <p class="hero-eyebrow">Yazıçı, oxucu, tənqidçi</p>
       <div class="hero-name-stack">
-        <p class="hero-name-shadow" id="heroShadow" aria-hidden="true">Nihad</p>
-        <h1 class="hero-name"><span class="visually-hidden">Nihad</span><span id="heroNameAnim" aria-hidden="true"></span></h1>
+        <p class="hero-name-shadow" id="heroShadow" aria-hidden="true">Ivan</p>
+        <h1 class="hero-name"><span class="visually-hidden">Ivan</span><span id="heroNameAnim" aria-hidden="true"></span></h1>
       </div>
       <p class="hero-tagline">"Aldadıcı ehtirasların çürütdüyü köhnə insanı üzərinizdən soyunub atın; ruhunuzun dərinliyində yenidən doğulun və Rəbbin öz surətinə görə yaratdığı, həqiqətdə və müqəddəslikdə parlayan, yeni insanı geyinin."</p>
       <svg class="ink-flourish" viewBox="0 0 220 22" aria-hidden="true">
@@ -807,7 +807,7 @@
 
   <footer>
     <div class="wrap footer-row">
-      <p>© 2026 Nihad. Bütün hüquqlar qorunur.</p>
+      <p>© 2026 Ivan. Bütün hüquqlar qorunur.</p>
       <ul class="footer-links">
         <li><a href="#">E-poçt</a></li>
         <li><a href="#">İnstaqram</a></li>
@@ -825,7 +825,7 @@
   (function(){
     var el = document.getElementById('heroNameAnim');
     if (!el) return;
-    var word = 'Nihad';
+    var word = 'Ivan';
     var startDelay = prefersReduced ? 0 : 0.35;
     word.split('').forEach(function(ch, i){
       var span = document.createElement('span');
@@ -889,7 +889,7 @@
     var btn = document.getElementById('themeToggleBtn');
     var clockEl = document.getElementById('clockDisplay');
     var stored = null;
-    try { stored = localStorage.getItem('nihad-theme'); } catch (e) {}
+    try { stored = localStorage.getItem('Ivan-theme'); } catch (e) {}
     var theme = stored || 'night';
 
     function updateLateNight(){
@@ -912,7 +912,7 @@
       btn.addEventListener('click', function(){
         theme = (root.getAttribute('data-theme') === 'day') ? 'night' : 'day';
         applyTheme(theme);
-        try { localStorage.setItem('nihad-theme', theme); } catch (e) {}
+        try { localStorage.setItem('Ivan-theme', theme); } catch (e) {}
       });
     }
 
